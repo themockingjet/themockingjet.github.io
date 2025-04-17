@@ -3,8 +3,8 @@ import { projectList } from "./projectList";
 
 export const Projects = () => {
     return (
-        <section id="projects" className="w-full py-20">
-            <h2 className="text-3xl font-bold mb-12 text-center">
+        <section id="projects" className="w-full py-8">
+            <h2 className="text-3xl font-bold mb-8 text-center">
                 <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
                     Projects
                 </span>

@@ -3,7 +3,7 @@ import { skillList } from "./skillList";
 
 export const Skills = () => {
     return (
-        <section id="projects" className="w-full py-20">
+        <section id="projects" className="w-full py-8">
             <h2 className="text-3xl font-bold mb-12 text-center">
                 <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
                     Skills
