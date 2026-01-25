@@ -21,7 +21,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
   linkTitle,
 }) => {
   return (
-    <Card>
+    <Card className="h-full bg-slate-900/40 shadow-sm shadow-sky-400/10 transition-colors duration-200 hover:bg-slate-900/50 hover:shadow-md">
       <div className="flex h-full flex-col p-6">
         <CardHeader>
           <div className="mb-2 flex items-center">
@@ -59,6 +59,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
             href={link}
             target={link === "#" ? "_self" : "_blank"}
             rel="noopener noreferrer"
+            onClick={link === "#" ? (e) => e.preventDefault() : undefined}
             className="flex items-center text-sm font-medium text-sky-400 hover:text-sky-300"
           >
             {linkTitle || "View Project"}
