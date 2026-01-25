@@ -9,11 +9,8 @@ const App = () => {
   return (
     <AppLayout className="no-scrollbar">
       <IntroductionSection id="main-introduction" />
-      {/* <SectionDivider /> */}
       <SummarySection id="main-summary" />
-      {/* <SectionDivider /> */}
       <ProjectSection id="main-projects" />
-      {/* <SectionDivider /> */}
       <SkillSection id="main-skills" />
       <Footer />
     </AppLayout>
