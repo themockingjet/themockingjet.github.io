@@ -10,24 +10,24 @@ interface AppLayoutProps {
   children?: React.ReactNode;
 }
 
-const getSectionElements = (
-  children: React.ReactNode,
-): { count: number; ids: string[] } => {
-  const ids: string[] = [];
-  React.Children.forEach(children, (child) => {
-    if (!React.isValidElement(child)) return;
-
-    const id = (child as React.ReactElement<{ id?: string }>).props?.id;
-    if (typeof id === "string" && id.trim() !== "") {
-      ids.push(id);
-    }
-  });
-  return { count: ids.length, ids };
-};
-
 const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
   const [sectionCount, setSectionCount] = React.useState(0);
   const [sectionIds, setSectionIds] = React.useState<string[]>([]);
+
+  const getSectionElements = (
+    children: React.ReactNode,
+  ): { count: number; ids: string[] } => {
+    const ids: string[] = [];
+    React.Children.forEach(children, (child) => {
+      if (!React.isValidElement(child)) return;
+
+      const id = (child as React.ReactElement<{ id?: string }>).props?.id;
+      if (typeof id === "string" && id.trim() !== "") {
+        ids.push(id);
+      }
+    });
+    return { count: ids.length, ids };
+  };
 
   useEffect(() => {
     const { count, ids } = getSectionElements(children);
@@ -39,7 +39,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
     <div
       className={twMerge(
         clsx(
-          "relative h-screen min-h-screen w-full antialiased md:flex-row",
+          "relative h-screen min-h-screen w-full antialiased select-none md:flex-row",
           className,
         ),
       )}

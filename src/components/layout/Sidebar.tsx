@@ -43,10 +43,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     elems.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [numOfSections]);
+  }, [numOfSections, sectionIds]);
 
   return (
-    <div className={twMerge(clsx("", className))}>
+    <div className={twMerge(clsx("z-10", className))}>
       <div className="flex flex-col items-center space-y-8">
         {Array.from({ length: numOfSections }).map((_, i) => (
           <SideDot
