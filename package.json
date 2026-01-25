@@ -1,34 +1,41 @@
 {
-    "name": "themockingjet.github.io",
-    "description": "A personal website",
-    "homepage": "https://themockingjet.github.io",
-    "private": true,
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "bunx --bun vite",
-        "build": "bunx --bun vite build",
-        "lint": "eslint .",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "@tailwindcss/vite": "^4.1.4",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0",
-        "tailwindcss": "^4.1.4"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.22.0",
-        "@iconify/react": "^5.2.1",
-        "@types/react": "^19.0.10",
-        "@types/react-dom": "^19.0.4",
-        "@vitejs/plugin-react": "^4.3.4",
-        "eslint": "^9.22.0",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "eslint-plugin-react-refresh": "^0.4.19",
-        "globals": "^16.0.0",
-        "typescript": "~5.7.2",
-        "typescript-eslint": "^8.26.1",
-        "vite": "^6.3.0"
-    }
+  "name": "themockingjet.github.io",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev-host": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "clsx": "^2.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@iconify/react": "^6.0.2",
+    "@types/node": "^24.10.9",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  },
+  "engines": {
+    "node": "^20"
+  }
 }
