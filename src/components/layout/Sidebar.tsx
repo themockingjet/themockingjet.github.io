@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 import SideDot from "@components/ui/SideDot";
@@ -15,6 +15,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   sectionIds,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const activeIndexRef = useRef<number>(0);
+  const prevDistRef = useRef<number>(Infinity);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -28,17 +30,44 @@ const Sidebar: React.FC<SidebarProps> = ({
     if (elems.length === 0) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the entry with largest intersectionRatio that's intersecting
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) {
-          const idx = elems.indexOf(visible.target as HTMLElement);
-          if (idx !== -1) setActiveIndex(idx);
+      () => {
+        if (typeof window === "undefined") return;
+
+        const HYSTERESIS = 60; // pixels
+        const viewportCenter = window.innerHeight / 2;
+        let closestIdx = -1;
+        let minDist = Infinity;
+
+        elems.forEach((el, idx) => {
+          const rect = el.getBoundingClientRect();
+          const elCenter = rect.top + rect.height / 2;
+          const dist = Math.abs(elCenter - viewportCenter);
+          if (dist < minDist) {
+            minDist = dist;
+            closestIdx = idx;
+          }
+        });
+
+        if (closestIdx === -1) return;
+
+        const currentIdx = activeIndexRef.current;
+        const prevDist = prevDistRef.current;
+
+        const acceptIfSignificantlyCloser = minDist + HYSTERESIS < prevDist;
+        const acceptIfNearCenter = minDist < window.innerHeight * 0.12;
+
+        if (closestIdx === currentIdx) {
+          prevDistRef.current = minDist;
+          return;
+        }
+
+        if (acceptIfSignificantlyCloser || acceptIfNearCenter) {
+          setActiveIndex(closestIdx);
+          activeIndexRef.current = closestIdx;
+          prevDistRef.current = minDist;
         }
       },
-      { root: null, rootMargin: "0px", threshold: [0.25, 0.5, 0.75] },
+      { root: null, rootMargin: "0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
 
     elems.forEach((el) => observer.observe(el));
