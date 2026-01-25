@@ -18,7 +18,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ id, className }) => {
   return (
     <section
       id={id}
-      className={twMerge(clsx("mb-12 flex w-full flex-col py-8", className))}
+      className={twMerge(clsx("flex w-full flex-col py-8 md:mb-48", className))}
     >
       <h2 className="mb-12 text-3xl font-bold">
         <span className="bg-linear-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
