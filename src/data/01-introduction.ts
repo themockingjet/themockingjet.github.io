@@ -6,12 +6,14 @@ export type BadgeData = {
 
 export type IntroductionData = {
   title: string;
+  position: string;
   coutryBadge: BadgeData;
   linkBadge: BadgeData;
 };
 
 const INTRODUCTION_DATA: IntroductionData = {
   title: "themockingjet",
+  position: "Associate Software Engineer",
   coutryBadge: {
     icon: "circle-flags:ph",
     label: "Philippines",

@@ -21,10 +21,13 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
         clsx("flex h-screen flex-col justify-center", className),
       )}
     >
-      <h1 className="text-4xl font-bold text-white lg:text-7xl">
-        {INTRODUCTION_DATA.title}
-      </h1>
-      <div className="mt-2 flex space-x-4 text-gray-300">
+      <div>
+        <h1 className="text-4xl font-bold lg:text-7xl">
+          {INTRODUCTION_DATA.title}
+        </h1>
+        <h2 className="text-blue-400">{INTRODUCTION_DATA.position}</h2>
+      </div>
+      <div className="mt-2 flex space-x-4">
         <Badge
           type="text"
           icon={INTRODUCTION_DATA.coutryBadge.icon}
