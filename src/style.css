@@ -1,49 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", sans-serif;
+
+  --color-bg-primary: hsl(0, 0%, 0%);
+  --color-primary: hsl(210, 15%, 55%);
+  --color-text-primary: hsl(210, 15%, 85%);
+  --color-text-secondary: hsl(210, 15%, 65%);
+}
+
 @layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    height: 100%;
+
+    /* Scrollbar */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
   body {
-    position: relative;
-    overflow-x: hidden;
+    background: url("/img/textures/classy-fabric.png");
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+  }
+
+  main {
     background:
       radial-gradient(
-        circle at 50% 15%,
-        rgba(192, 14, 183, 0.1) 0%,
-        transparent 25%
+        circle at 50% 18%,
+        hsla(0, 0%, 100%, 0.1) 0%,
+        transparent 18%
       ),
       radial-gradient(
         circle at 85% 30%,
-        rgba(8, 136, 158, 0.15) 0%,
+        hsla(189, 90%, 33%, 0.15) 0%,
         transparent 40%
       ),
       radial-gradient(
         circle at 15% 50%,
-        rgba(51, 4, 160, 0.15) 0%,
+        hsla(258, 95%, 32%, 0.15) 0%,
         transparent 35%
       ),
       radial-gradient(
         circle at 75% 80%,
-        rgba(88, 6, 54, 0.1) 0%,
+        hsla(325, 87%, 18%, 0.1) 0%,
         transparent 30%
-      ),
-      url("/textures/classy-fabric.png");
-    background-color: black;
+      );
   }
 }
 
 @layer components {
-  @keyframes firefly {
-    0%,
-    100% {
-      opacity: 0.1;
-    }
-    50% {
-      opacity: 0.7;
-    }
-    25% {
-      transform: translateY(-7px);
-    }
-    75% {
-      transform: translateY(7px);
-    }
-  }
 }
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* radial-gradient(
+        circle at 50% 15%,
+        hsla(303, 86%, 40%, 0.1) 0%,
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 85% 30%,
+        hsla(189, 90%, 33%, 0.15) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 15% 50%,
+        hsla(258, 95%, 32%, 0.15) 0%,
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at 75% 80%,
+        hsla(325, 87%, 18%, 0.1) 0%,
+        transparent 30%
+      ), */
