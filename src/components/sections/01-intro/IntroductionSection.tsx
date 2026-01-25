@@ -18,7 +18,7 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
     <section
       id={id}
       className={twMerge(
-        clsx("flex h-screen snap-center flex-col justify-center", className),
+        clsx("flex h-screen flex-col justify-center", className),
       )}
     >
       <h1 className="text-4xl font-bold text-white lg:text-7xl">

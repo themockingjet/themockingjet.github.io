@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
 import Sidebar from "./Sidebar";
+import Fireflies from "@components/effects/Fireflies";
 
 interface AppLayoutProps {
   className?: string;
@@ -48,8 +49,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
         numOfSections={sectionCount}
         sectionIds={sectionIds}
       />
-      <main>
-        <div className="container mx-auto flex flex-col">{children}</div>
+      <main className="relative">
+        <Fireflies />
+        <div className="container mx-auto flex flex-col scroll-smooth">
+          {children}
+        </div>
       </main>
     </div>
   );

@@ -1,5 +1,4 @@
 import AppLayout from "@components/layout/AppLayout";
-import SectionDivider from "@components/ui/SectionDivider";
 import IntroductionSection from "@components/sections/01-intro/IntroductionSection";
 import SummarySection from "@components/sections/02-summary/SummarySection";
 import ProjectSection from "@components/sections/03-projects/ProjectSection";
@@ -8,7 +7,7 @@ import { Footer } from "@components/footer";
 
 const App = () => {
   return (
-    <AppLayout className="no-scrollbar snap-y overflow-y-scroll scroll-smooth">
+    <AppLayout className="no-scrollbar">
       <IntroductionSection id="main-introduction" />
       {/* <SectionDivider /> */}
       <SummarySection id="main-summary" />
