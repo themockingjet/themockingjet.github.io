@@ -32,7 +32,7 @@ const Fireflies: React.FC = () => {
     const hue =
       Math.random() > 0.5
         ? Math.floor(Math.random() * 30 + 180)
-        : Math.floor(Math.random() * 30 + 140);
+        : Math.floor(Math.random() * 30 + 30);
     const glowSize = size * 1;
     const duration = Math.random() * 10 + 5;
     const animations = [

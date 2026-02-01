@@ -1,9 +1,9 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { Icon } from "@iconify/react";
 
 import { SKILL_DATA } from "@data/04-skill";
+import Badge from "@components/ui/Badge";
 
 interface SkillSectionProps {
   id: string;
@@ -18,29 +18,27 @@ const SkillSection: React.FC<SkillSectionProps> = ({ id, className }) => {
   return (
     <section
       id={id}
-      className={twMerge(clsx("flex w-full flex-col py-8 md:mb-48", className))}
+      className={twMerge(
+        clsx("flex w-full flex-col md:mb-24 lg:mb-48", className),
+      )}
     >
-      <h2 className="mb-12 text-3xl font-bold">
-        <span className="bg-linear-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-          Skills
-        </span>
-      </h2>
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+      <h2 className="section-title mb-12 text-3xl font-bold">Skills</h2>
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         {categories.map((category) => (
           <div key={category}>
-            <h3 className="mb-6 text-xl font-medium text-gray-200 capitalize">
+            <h3 className="mb-6 text-center text-xl font-medium text-gray-200 capitalize md:text-start">
               {category}
             </h3>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-2">
               {SKILL_DATA.filter((skill) => skill.category === category).map(
                 (skill) => (
                   <div key={skill.name} className="flex items-center space-x-2">
-                    <Icon
-                      inline
+                    <Badge
+                      type="text"
                       icon={skill.icon}
-                      className={twMerge("h-8 w-8", skill.iconClassName)}
+                      label={skill.name}
+                      iconClassName="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8"
                     />
-                    <span className="ml-2">{skill.name}</span>
                   </div>
                 ),
               )}

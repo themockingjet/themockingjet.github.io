@@ -3,49 +3,49 @@ export type Skill = {
   name: string;
   icon: string;
   iconClassName?: string;
-  category: "tech" | "others";
+  category: "stack" | "others";
 };
 
 const SKILL_DATA: Skill[] = [
   {
     name: "Python",
     icon: "logos:python",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "JavaScript",
     icon: "logos:javascript",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "TypeScript",
     icon: "logos:typescript-icon",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "Svelte",
     icon: "logos:svelte-icon",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "Tailwind CSS",
     icon: "logos:tailwindcss-icon",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "Bun",
     icon: "logos:bun",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "PostgreSQL",
     icon: "logos:postgresql",
-    category: "tech",
+    category: "stack",
   },
   {
     name: "AutoHotkey",
     icon: "vscode-icons:file-type-autohotkey",
-    category: "tech",
+    category: "stack",
   },
   {
     label: "Design",

@@ -18,10 +18,13 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
     <section
       id={id}
       className={twMerge(
-        clsx("flex h-screen flex-col justify-center", className),
+        clsx(
+          "flex flex-col items-center justify-center pt-24 md:items-start md:pt-36 lg:h-dvh lg:pt-0",
+          className,
+        ),
       )}
     >
-      <div>
+      <div className="flex flex-col items-center md:block">
         <h1 className="text-4xl font-bold lg:text-7xl">
           {INTRODUCTION_DATA.title}
         </h1>
@@ -30,8 +33,8 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
       <div className="mt-2 flex space-x-4">
         <Badge
           type="text"
-          icon={INTRODUCTION_DATA.coutryBadge.icon}
-          label={INTRODUCTION_DATA.coutryBadge.label}
+          icon={INTRODUCTION_DATA.countryBadge.icon}
+          label={INTRODUCTION_DATA.countryBadge.label}
         />
         <Badge
           type="link"
