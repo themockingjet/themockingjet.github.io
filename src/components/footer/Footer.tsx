@@ -1,21 +1,25 @@
-import { Icon } from "@iconify/react";
+import Badge from "@components/ui/Badge";
+
+import { FOOTER_DATA } from "@data/footer";
 
 export const Footer = () => {
   return (
-    <footer className="mt-auto border-t border-gray-800 py-6">
-      <div className="container mx-auto px-4">
-        <p className="flex items-center justify-center gap-1 text-center text-sm text-gray-400">
-          © 2025 themockingjet • Built with
-          <Icon icon="logos:vitejs" className="mx-1 inline-block h-4 w-4" />
-          Vite
-          <Icon icon="logos:react" className="mx-1 inline-block h-4 w-4" />
-          React and
-          <Icon
-            icon="logos:tailwindcss-icon"
-            className="mx-1 inline-block h-5 w-5"
-          />
-          Tailwind CSS
-        </p>
+    <footer className="container mx-auto mt-6 h-18">
+      <div className="h-[0.5px] bg-linear-to-r/increasing from-indigo-800 to-red-800" />
+      <div className="mt-1 flex h-full flex-col justify-center gap-2 px-4 text-sm text-gray-400 md:flex-row md:items-center md:justify-center md:gap-4 lg:mt-2">
+        <p className="text-center">{FOOTER_DATA.content}</p>
+        <div className="flex justify-center gap-4 md:before:content-['|']">
+          {FOOTER_DATA.stack.map((item) => (
+            <span key={item.name}>
+              <Badge
+                type="text"
+                icon={item.icon}
+                label={item.name}
+                iconClassName="h-5 w-5 lg:h-6 lg:w-6"
+              />
+            </span>
+          ))}
+        </div>
       </div>
     </footer>
   );

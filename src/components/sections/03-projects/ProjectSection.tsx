@@ -16,16 +16,12 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ id, className }) => {
       id={id}
       className={twMerge(
         clsx(
-          "flex h-screen w-full flex-col justify-center py-8 md:mb-36",
+          "flex min-h-screen w-full flex-col justify-center pt-24 md:pt-36 lg:h-dvh lg:pt-0",
           className,
         ),
       )}
     >
-      <h2 className="mb-8 text-3xl font-bold">
-        <span className="bg-linear-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-          Projects
-        </span>
-      </h2>
+      <h2 className="section-title mb-8 text-3xl font-bold">Projects</h2>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {PROJECT_DATA.map((project, index) => (
           <ProjectItem

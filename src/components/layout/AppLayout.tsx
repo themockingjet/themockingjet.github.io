@@ -45,7 +45,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
       )}
     >
       <Sidebar
-        className="fixed top-1/2 right-0 hidden -translate-y-1/2 md:mr-8 md:block lg:mr-16"
+        className="fixed top-1/2 right-0 hidden -translate-y-1/2 md:mr-8 lg:mr-16 lg:block"
         numOfSections={sectionCount}
         sectionIds={sectionIds}
       />

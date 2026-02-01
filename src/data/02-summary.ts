@@ -44,7 +44,7 @@ const SUMMARY_DATA: SummaryData = {
         { text: "I am also into " },
         { text: "AI development", className: "italic" },
         { text: " with " },
-        { text: "semantic-kernels", className: "text-blue-400" },
+        { text: "semantic-kernel", className: "text-blue-400" },
         { text: "." },
       ],
       className: "mb-4 leading-relaxed text-pretty",

@@ -7,7 +7,7 @@ import { Footer } from "@components/footer";
 
 const App = () => {
   return (
-    <AppLayout className="no-scrollbar">
+    <AppLayout className="no-scrollbar min-w-xs">
       <IntroductionSection id="main-introduction" />
       <SummarySection id="main-summary" />
       <ProjectSection id="main-projects" />

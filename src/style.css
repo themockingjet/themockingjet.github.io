@@ -11,6 +11,18 @@
 }
 
 @layer components {
+  .section-title {
+    background-image: linear-gradient(
+      to right,
+      hsl(198, 93%, 60%) 0%,
+      hsl(217, 91%, 60%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
   @keyframes firefly-vertical {
     0%,
     100% {
@@ -114,6 +126,10 @@
         hsla(325, 87%, 18%, 0.1) 0%,
         transparent 30%
       );
+  }
+
+  section {
+    @apply px-4 pt-24 md:px-8 md:pt-36 lg:px-24 lg:pt-0;
   }
 }
 

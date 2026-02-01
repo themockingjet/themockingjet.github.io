@@ -7,14 +7,14 @@ export type BadgeData = {
 export type IntroductionData = {
   title: string;
   position: string;
-  coutryBadge: BadgeData;
+  countryBadge: BadgeData;
   linkBadge: BadgeData;
 };
 
 const INTRODUCTION_DATA: IntroductionData = {
   title: "themockingjet",
   position: "Associate Software Engineer",
-  coutryBadge: {
+  countryBadge: {
     icon: "circle-flags:ph",
     label: "Philippines",
   },

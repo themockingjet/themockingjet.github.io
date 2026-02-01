@@ -34,7 +34,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ id, className }) => {
     <section
       id={id}
       className={twMerge(
-        clsx("flex h-screen max-w-3xl flex-col justify-center", className),
+        clsx("flex max-w-3xl flex-col justify-center lg:h-dvh", className),
       )}
     >
       {renderParagraph(SUMMARY_DATA.paragraphs)}
