@@ -122,8 +122,13 @@
         transparent 35%
       ),
       radial-gradient(
-        circle at 75% 80%,
-        hsla(325, 87%, 18%, 0.1) 0%,
+        circle at 25% 75%,
+        hsla(271, 66%, 31%, 0.1) 0%,
+        transparent 15%
+      ),
+      radial-gradient(
+        circle at 80% 85%,
+        hsla(234, 47%, 52%, 0.1) 0%,
         transparent 30%
       );
   }
