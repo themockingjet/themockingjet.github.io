@@ -1,0 +1,156 @@
+/* Section container */
+.about {
+  position: relative;
+  padding: var(--space-16) 0;
+}
+
+/* Ambient glow — centered on watermark text */
+.about::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  top: 30%;
+  width: 60vw;
+  height: 60vw;
+  transform: translate(-20%, -50%);
+  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+/* Background watermark */
+.decor {
+  position: absolute;
+  left: 5%;
+  top: 30%;
+  font-size: 22vw;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  background: radial-gradient(ellipse at center,
+      color-mix(in srgb, var(--color-accent) 35%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 20%, transparent) 40%,
+      color-mix(in srgb, var(--color-accent) 8%, transparent) 70%,
+      transparent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+  opacity: 0.5;
+}
+
+.inner {
+  composes: section-inner from global;
+}
+
+.heading {
+  composes: section-heading from global;
+  margin-bottom: var(--space-3);
+}
+
+/* Persona indicator */
+
+.personaIndicator {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+}
+
+.personaName {
+  color: var(--color-accent);
+  display: inline;
+}
+
+/* Prose container */
+.prose {
+  max-width: 58ch;
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.prose::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+}
+
+/* Paragraph block (one per intent) */
+
+.slot {
+  margin-bottom: var(--space-6);
+}
+
+.slot:last-child {
+  margin-bottom: 0;
+}
+
+.intent {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  margin-bottom: var(--space-2);
+  user-select: none;
+}
+
+.paragraph {
+  font-size: var(--text-base);
+  color: color-mix(in srgb, var(--color-text) 85%, transparent);
+  line-height: 1.85;
+  margin: 0;
+}
+
+.lead {
+  font-size: var(--text-lg);
+  color: var(--color-text);
+}
+
+/* Swappable word */
+.word {
+  display: inline;
+  padding: 1px 3px;
+  margin: 0 -3px;
+  border-radius: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+@media (max-width: 1024px) {
+  .decor {
+    display: none;
+  }
+
+  .about::after {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .about {
+    padding: var(--space-12) 0;
+  }
+
+  .inner {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+
+  .intent {
+    display: none;
+  }
+
+  .personaIndicator {
+    display: none;
+  }
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://themockingjet.github.io/sitemap.xml
