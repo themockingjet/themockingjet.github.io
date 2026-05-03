@@ -2,15 +2,10 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './Hero.module.css'
 import type { HeroData } from '../../lib/parsePortfolio'
-import { EASE } from '../../lib/motion'
+import { EASE, STAGGER_DELAY } from '../../lib/motion'
 
 interface HeroProps {
   data: HeroData
-}
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 }
 
 const item = {
@@ -90,7 +85,7 @@ export default function Hero({ data }: HeroProps) {
       <motion.div
         className={styles.content}
         style={{ y: contentY }}
-        variants={container}
+        variants={STAGGER_DELAY}
         initial="hidden"
         animate="show"
       >

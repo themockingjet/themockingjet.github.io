@@ -13,7 +13,8 @@ const Skills = lazy(() => import('./components/Skills/Skills'))
 const portfolio = parsePortfolio(rawPortfolio)
 
 export const THEMES = [
-  { id: 'warm',   label: 'Warm',   accent: '#5e8a70' },
+  { id: 'amber',  label: 'Amber',  accent: '#f59e0b' },
+  { id: 'sage',   label: 'Sage',   accent: '#5e8a70' },
   { id: 'ocean',  label: 'Ocean',  accent: '#4a9eff' },
   { id: 'ember',  label: 'Ember',  accent: '#e07840' },
   { id: 'violet', label: 'Violet', accent: '#8b67e8' },
@@ -31,16 +32,16 @@ const REVEAL = {
 
 export default function App() {
   const [dark, setDark] = useState(true)
-  const [theme, setTheme] = useState<ThemeId>('warm')
+  const [theme, setTheme] = useState<ThemeId>('amber')
   const toggleDark = () => setDark((d) => !d)
 
   useEffect(() => {
-    if (dark) document.documentElement.removeAttribute('data-dark')
-    else document.documentElement.setAttribute('data-dark', '0')
+    if (dark) document.documentElement.removeAttribute('data-mode')
+    else document.documentElement.setAttribute('data-mode', 'light')
   }, [dark])
 
   useEffect(() => {
-    if (theme === 'warm') document.documentElement.removeAttribute('data-theme')
+    if (theme === 'amber') document.documentElement.removeAttribute('data-theme')
     else document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
 
