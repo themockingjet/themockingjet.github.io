@@ -4,16 +4,11 @@ import { Icon } from '@iconify/react'
 import styles from './Skills.module.css'
 import type { SkillsData } from '../../lib/parsePortfolio'
 import { resolveIcon } from '../../lib/icons'
-import { EASE, STAGGER } from '../../lib/motion'
+import { EASE, STAGGER, FADE_UP_SM } from '../../lib/motion'
 
 const CHIP = {
   hidden: { opacity: 0, scale: 0.92 },
   show:   { opacity: 1, scale: 1, transition: { duration: 0.4, ease: EASE } },
-}
-
-const ROW = {
-  hidden: { opacity: 0, y: 10 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
 }
 
 interface SkillsProps {
@@ -23,7 +18,7 @@ interface SkillsProps {
 function SkillGroup({ label, items }: { label: string; items: string[] }) {
   if (items.length === 0) return null
   return (
-    <motion.div className={styles.group} variants={ROW}>
+    <motion.div className={styles.group} variants={FADE_UP_SM}>
       <h3 className={styles.groupLabel}>{label}</h3>
       <motion.ul className={styles.chipList} role="list" variants={STAGGER}>
         {items.map((item) => {

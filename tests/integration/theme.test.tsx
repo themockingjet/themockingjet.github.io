@@ -5,11 +5,11 @@ import App from '../../src/App'
 describe('Theme switching', () => {
   beforeEach(() => {
     document.documentElement.removeAttribute('data-theme')
-    document.documentElement.removeAttribute('data-dark')
+    document.documentElement.removeAttribute('data-mode')
   })
 
   describe('given the default state', () => {
-    it('should start with the warm theme (no data-theme attribute)', () => {
+    it('should start with the amber theme (no data-theme attribute)', () => {
       render(<App />)
       expect(document.documentElement.getAttribute('data-theme')).toBeNull()
     })
@@ -24,14 +24,14 @@ describe('Theme switching', () => {
       expect(document.documentElement.getAttribute('data-theme')).toBe('ocean')
     })
 
-    it('should switch back to warm when selected again', async () => {
+    it('should switch back to amber when selected again', async () => {
       const user = userEvent.setup()
       render(<App />)
       const themeBtn = screen.getByRole('button', { name: /theme/i })
       await user.click(themeBtn)
       await user.click(screen.getByRole('option', { name: /ocean/i }))
       await user.click(themeBtn)
-      await user.click(screen.getByRole('option', { name: /warm/i }))
+      await user.click(screen.getByRole('option', { name: /amber/i }))
       expect(document.documentElement.getAttribute('data-theme')).toBeNull()
     })
 
@@ -48,22 +48,22 @@ describe('Theme switching', () => {
 
 describe('Dark mode toggle', () => {
   beforeEach(() => {
-    document.documentElement.removeAttribute('data-dark')
+    document.documentElement.removeAttribute('data-mode')
   })
 
   describe('given the default dark mode', () => {
-    it('should start without a data-dark attribute', () => {
+    it('should start without a data-mode attribute', () => {
       render(<App />)
-      expect(document.documentElement.getAttribute('data-dark')).toBeNull()
+      expect(document.documentElement.getAttribute('data-mode')).toBeNull()
     })
   })
 
   describe('when the user toggles to light mode', () => {
-    it('should set data-dark="0" on the document', async () => {
+    it('should set data-mode="light" on the document', async () => {
       const user = userEvent.setup()
       render(<App />)
       await user.click(screen.getByRole('button', { name: /switch to light/i }))
-      expect(document.documentElement.getAttribute('data-dark')).toBe('0')
+      expect(document.documentElement.getAttribute('data-mode')).toBe('light')
     })
 
     it('should toggle back to dark mode on second click', async () => {
@@ -71,7 +71,7 @@ describe('Dark mode toggle', () => {
       render(<App />)
       await user.click(screen.getByRole('button', { name: /switch to light/i }))
       await user.click(screen.getByRole('button', { name: /switch to dark/i }))
-      expect(document.documentElement.getAttribute('data-dark')).toBeNull()
+      expect(document.documentElement.getAttribute('data-mode')).toBeNull()
     })
   })
 })

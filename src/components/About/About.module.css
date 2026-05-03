@@ -4,7 +4,7 @@
   padding: var(--space-16) 0;
 }
 
-/* Ambient glow — centered on watermark text */
+/* Ambient glow */
 .about::after {
   content: '';
   position: absolute;
@@ -21,26 +21,9 @@
 
 /* Background watermark */
 .decor {
-  position: absolute;
+  composes: section-decor from global;
   left: 5%;
   top: 30%;
-  font-size: 22vw;
-  font-weight: 800;
-  line-height: 1;
-  white-space: nowrap;
-  background: radial-gradient(ellipse at center,
-      color-mix(in srgb, var(--color-accent) 35%, transparent) 0%,
-      color-mix(in srgb, var(--color-accent) 20%, transparent) 40%,
-      color-mix(in srgb, var(--color-accent) 8%, transparent) 70%,
-      transparent 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  pointer-events: none;
-  user-select: none;
-  letter-spacing: -0.04em;
-  opacity: 0.5;
 }
 
 .inner {

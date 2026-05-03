@@ -39,11 +39,11 @@ test.describe('Critical user flows', () => {
     await page.goto('/')
     // Toggle to light
     await page.getByRole('button', { name: /switch to light/i }).click()
-    const dark = await page.locator('html').getAttribute('data-dark')
-    expect(dark).toBe('0')
+    const dark = await page.locator('html').getAttribute('data-mode')
+    expect(dark).toBe('light')
     // Toggle back to dark
     await page.getByRole('button', { name: /switch to dark/i }).click()
-    const darkAfter = await page.locator('html').getAttribute('data-dark')
+    const darkAfter = await page.locator('html').getAttribute('data-mode')
     expect(darkAfter).toBeNull()
   })
 

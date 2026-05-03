@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import styles from './Projects.module.css'
 import type { ProjectData } from '../../lib/parsePortfolio'
 import { resolveIcon } from '../../lib/icons'
-import { EASE, STAGGER } from '../../lib/motion'
+import { EASE, STAGGER, FADE_UP } from '../../lib/motion'
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   active:     { label: 'Active',     color: 'var(--status-active)' },
@@ -14,11 +14,6 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 
 function resolveStatus(status: string) {
   return STATUS_CONFIG[status] ?? { label: status, color: 'var(--text-muted)' }
-}
-
-const CARD = {
-  hidden: { opacity: 0, y: 18 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 }
 
 
@@ -67,7 +62,7 @@ function ProjectCard({ project, index, featured }: { project: ProjectData; index
   ].filter(Boolean).join(' ')
 
   return (
-    <motion.li className={cardClass} variants={CARD}>
+    <motion.li className={cardClass} variants={FADE_UP}>
       <span className={styles.cornerBL} aria-hidden />
       <span className={styles.cornerBR} aria-hidden />
       <span className={styles.index}>{indexLabel}</span>

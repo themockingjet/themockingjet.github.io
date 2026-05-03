@@ -2,7 +2,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { useEffect, useState, useRef } from 'react'
 import styles from './About.module.css'
 import type { AboutData } from '../../lib/parsePortfolio'
-import { EASE, STAGGER } from '../../lib/motion'
+import { EASE, STAGGER, FADE_UP } from '../../lib/motion'
 
 interface AboutProps {
   data: AboutData
@@ -12,11 +12,6 @@ const CYCLE_MS  = 7000
 const FADE_MS   = 0.35
 
 const ENTER = STAGGER
-
-const SLOT_ENTER = {
-  hidden: { opacity: 0, y: 12 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
-}
 
 function WordSlot({ variants, personaIdx }: { variants: string[]; personaIdx: number }) {
   const [hasSwapped, setHasSwapped] = useState(false)
@@ -128,7 +123,7 @@ export default function About({ data }: AboutProps) {
           viewport={{ once: true, margin: '-60px' }}
         >
           {slots.map(({ label, segments }, i) => (
-            <motion.div key={label} className={styles.slot} variants={SLOT_ENTER}>
+            <motion.div key={label} className={styles.slot} variants={FADE_UP}>
               <span className={styles.intent}>// {label}</span>
               <p className={`${styles.paragraph} ${i === 0 ? styles.lead : ''}`}>
                 {segments.map((seg, j) =>
