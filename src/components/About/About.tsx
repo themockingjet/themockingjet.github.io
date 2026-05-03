@@ -14,15 +14,15 @@ const FADE_MS   = 0.35
 const ENTER = STAGGER
 
 function WordSlot({ variants, personaIdx }: { variants: string[]; personaIdx: number }) {
-  const [hasSwapped, setHasSwapped] = useState(false)
   const prevIdx = useRef(personaIdx)
+  const hasSwappedRef = useRef(false)
 
-  useEffect(() => {
-    if (prevIdx.current !== personaIdx) {
-      prevIdx.current = personaIdx
-      setHasSwapped(true)
-    }
-  }, [personaIdx])
+  if (prevIdx.current !== personaIdx) {
+    prevIdx.current = personaIdx
+    hasSwappedRef.current = true
+  }
+
+  const hasSwapped = hasSwappedRef.current
 
   return (
     <motion.span
