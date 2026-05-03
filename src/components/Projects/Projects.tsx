@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { Icon } from '@iconify/react'
 import styles from './Projects.module.css'
 import type { ProjectData } from '../../lib/parsePortfolio'
@@ -129,17 +129,8 @@ export default function Projects({ projects }: ProjectsProps) {
   const archived = projects.filter((p) => p.status === 'deprecated')
   const sectionRef = useRef<HTMLElement>(null)
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  })
-  const decorY = useTransform(scrollYProgress, [0, 1], [80, -120])
-
   return (
     <section ref={sectionRef} className={styles.projects} aria-label="Projects">
-      <motion.span className={styles.decor} aria-hidden="true" style={{ y: decorY }}>
-        Projects
-      </motion.span>
       <div className={styles.inner}>
         <motion.h2
           className={styles.heading}

@@ -1,29 +1,21 @@
 /* Section container */
 .skills {
+  composes: section-grid from global;
   position: relative;
-  padding: var(--space-16) 0;
+  padding: 96px 0;
+  overflow: visible;
 }
 
-/* Ambient glow — centered on watermark text */
 .skills::after {
   content: '';
   position: absolute;
-  left: 10%;
-  top: 40%;
-  width: 60vw;
-  height: 60vw;
-  transform: translate(-20%, -50%);
-  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 60%);
+  right: -8vw;
+  bottom: -10vw;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--color-accent) 7%, transparent) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
-}
-
-/* Background watermark */
-.decor {
-  composes: section-decor from global;
-  left: 10%;
-  top: 40%;
 }
 
 .inner {
@@ -155,11 +147,6 @@
 .chip:hover .chipIcon {
   color: var(--color-accent);
   transform: scale(1.15);
-}
-
-@media (max-width: 1024px) {
-  .decor { display: none; }
-  .skills::after { display: none; }
 }
 
 @media (max-width: 767px) {

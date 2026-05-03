@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { useEffect, useState, useRef } from 'react'
 import styles from './About.module.css'
 import type { AboutData } from '../../lib/parsePortfolio'
@@ -55,12 +55,6 @@ export default function About({ data }: AboutProps) {
   const [ready, setReady] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  })
-  const decorY = useTransform(scrollYProgress, [0, 1], [70, -110])
-
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 1800)
     return () => clearTimeout(t)
@@ -77,9 +71,6 @@ export default function About({ data }: AboutProps) {
 
   return (
     <section ref={sectionRef} className={styles.about} aria-label="About">
-      <motion.span className={styles.decor} aria-hidden="true" style={{ y: decorY }}>
-        About
-      </motion.span>
       <div className={styles.inner}>
         <motion.h2
           className={styles.heading}

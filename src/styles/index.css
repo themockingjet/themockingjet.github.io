@@ -291,26 +291,16 @@ body::before {
   background: var(--color-border);
 }
 
-/* Shared watermark / decor text */
-.section-decor {
+/* Subtle dot-grid background pattern */
+.section-grid::before {
+  content: '';
   position: absolute;
-  font-size: 22vw;
-  font-weight: 800;
-  line-height: 1;
-  white-space: nowrap;
-  background: radial-gradient(ellipse at center,
-      color-mix(in srgb, var(--color-accent) 35%, transparent) 0%,
-      color-mix(in srgb, var(--color-accent) 20%, transparent) 40%,
-      color-mix(in srgb, var(--color-accent) 8%, transparent) 70%,
-      transparent 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  inset: 0;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-text-faint) 20%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
-  user-select: none;
-  letter-spacing: -0.04em;
-  opacity: 0.5;
+  z-index: 0;
+  opacity: 0.3;
 }
 
 .status-dot {

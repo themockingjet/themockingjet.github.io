@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { motion } from 'motion/react'
 import { Icon } from '@iconify/react'
 import styles from './Skills.module.css'
 import type { SkillsData } from '../../lib/parsePortfolio'
@@ -42,17 +42,8 @@ function SkillGroup({ label, items }: { label: string; items: string[] }) {
 export default function Skills({ skills }: SkillsProps) {
   const sectionRef = useRef<HTMLElement>(null)
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  })
-  const decorY = useTransform(scrollYProgress, [0, 1], [60, -100])
-
   return (
     <section ref={sectionRef} className={styles.skills} aria-label="Skills">
-      <motion.span className={styles.decor} aria-hidden="true" style={{ y: decorY }}>
-        Skills
-      </motion.span>
       <div className={styles.inner}>
         <motion.h2
           className={styles.heading}
