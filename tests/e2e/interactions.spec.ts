@@ -30,3 +30,13 @@ test('key destination states have no WCAG A or AA violations', async ({ page }) 
     expect(result.violations, `axe at ${id}`).toEqual([])
   }
 })
+
+test('light theme maintains WCAG A and AA checks across destinations', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Switch to light mode' }).click()
+  for (const label of ['Home', 'Your route', 'Projects', 'The lab', 'About', 'Contact']) {
+    await page.getByRole('navigation', { name: 'Journey destinations' }).getByRole('link', { name: label }).click()
+    const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
+    expect(result.violations, `axe in light mode at ${label}`).toEqual([])
+  }
+})
