@@ -4,14 +4,15 @@ import MissionPlanner from '../../src/components/MissionPlanner/MissionPlanner'
 import type { ProjectData } from '../../src/lib/parsePortfolio'
 
 const projects: ProjectData[] = [
-  { id: 'first', title: 'First project', interests: ['automation'], status: '', url: '', stack: [], description: 'First', details: [] },
-  { id: 'second', title: 'Second project', interests: ['backend'], status: '', url: '', stack: [], description: 'Second', details: [] },
+  { id: 'first', title: 'First project', interests: ['automation'], matchReason: 'Automates the first task.', status: '', url: '', stack: [], description: 'First', details: [] },
+  { id: 'second', title: 'Second project', interests: ['backend'], matchReason: 'Processes backend events.', status: '', url: '', stack: [], description: 'Second', details: [] },
 ]
 
 it('updates the preview and lets visitors start and exit a guided route', async () => {
   const user = userEvent.setup()
   render(<MissionPlanner projects={projects} profileUrl="https://example.com" />)
   expect(screen.getByRole('link', { name: 'First project' })).toHaveAttribute('href', '#project-first')
+  expect(screen.getByText('Automates the first task.')).toBeInTheDocument()
   expect(screen.queryByRole('link', { name: 'Second project' })).not.toBeInTheDocument()
   await user.click(screen.getByRole('checkbox', { name: 'backend' }))
   expect(screen.getByRole('link', { name: 'Second project' })).toHaveAttribute('href', '#project-second')

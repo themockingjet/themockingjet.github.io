@@ -23,6 +23,7 @@ From {Manila|the Philippines}.
 ### Project Alpha
 id: project-alpha
 interests: web, frontend
+match_reason: A web interface.
 status: active
 url: https://example.com
 stack: React, TypeScript
@@ -41,6 +42,7 @@ Chose React for speed.
 ### Project Beta
 id: project-beta
 interests: automation
+match_reason: An automated process.
 status: beta
 stack: Python
 
@@ -115,6 +117,7 @@ describe('parsePortfolio', () => {
       it('should parse project metadata (title, status, url, stack)', () => {
         expect(data.projects[0].id).toBe('project-alpha')
         expect(data.projects[0].interests).toEqual(['web', 'frontend'])
+        expect(data.projects[0].matchReason).toBe('A web interface.')
         expect(data.projects[0].title).toBe('Project Alpha')
         expect(data.projects[0].status).toBe('active')
         expect(data.projects[0].url).toBe('https://example.com')
@@ -153,6 +156,7 @@ describe('parsePortfolio', () => {
       expect(() => parsePortfolio(MINIMAL_MD.replace('id: project-beta', 'id: project-alpha'))).toThrow(/unique/)
       expect(() => parsePortfolio(MINIMAL_MD.replace('interests: automation', 'interests: web, web'))).toThrow(/interest tags/)
       expect(() => parsePortfolio(MINIMAL_MD.replace('interests: automation', ''))).toThrow(/interest tags/)
+      expect(() => parsePortfolio(MINIMAL_MD.replace('match_reason: A web interface.', ''))).toThrow(/match reason/)
     })
     it('should handle empty input gracefully', () => {
       const data = parsePortfolio('')

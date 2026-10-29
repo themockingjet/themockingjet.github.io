@@ -33,6 +33,7 @@ export interface ProjectDetail {
 export interface ProjectData {
   id: string
   interests: string[]
+  matchReason: string
   title: string
   status: string
   url: string
@@ -133,11 +134,13 @@ function parseProjects(raw: string): ProjectData[] {
     if (interests.length === 0 || interests.some((tag) => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag)) || new Set(interests).size !== interests.length) {
       throw new Error(`Project "${title}" must have unique lowercase kebab-case interest tags`)
     }
+    if (!meta.match_reason) throw new Error(`Project "${title}" must have a match reason`)
     ids.add(id)
 
     projects.push({
       id,
       interests,
+      matchReason: meta.match_reason,
       title,
       status: meta.status ?? '',
       url: meta.url ?? '',

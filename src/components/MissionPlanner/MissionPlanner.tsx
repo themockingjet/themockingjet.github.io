@@ -46,7 +46,7 @@ export default function MissionPlanner({ projects, profileUrl }: Props) {
           <div>
             <div className={styles.preview} aria-live="polite">
               <h3>Your suggested route <span>{route.length} {route.length === 1 ? 'destination' : 'destinations'}</span></h3>
-              {route.length ? <ol>{route.map(({ project, matchedInterests }) => <li key={project.id}><a href={`#project-${project.id}`}>{project.title}</a><p>{project.description}</p><p>Matches: {matchedInterests.join(', ')}</p></li>)}</ol> : <p>Select an interest to see matching projects.</p>}
+              {route.length ? <ol>{route.map(({ project, matchedInterests }) => <li key={project.id}><a href={`#project-${project.id}`}>{project.title}</a><p>{project.matchReason}</p><p>Matches: {matchedInterests.join(', ')}</p></li>)}</ol> : <p>Select an interest to see matching projects.</p>}
             </div>
             <div className={styles.actions}>
               <button disabled={!route.length} onClick={() => { setGuided(route); setIndex(0); visit(route[0]) }}>Start guided route</button>

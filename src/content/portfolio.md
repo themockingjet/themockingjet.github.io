@@ -26,6 +26,7 @@ Right now I'm focused on {building services that hold up without me babysitting 
 ### Binance Trading Bot
 id: binance-trading-bot
 interests: automation, real-time, backend
+match_reason: Streaming market events feed backend rules that trigger automated actions.
 status: beta
 stack: Bun, TypeScript, Binance API, Binance Websocket, TA-Lib, Svelte, Tailwind CSS
 
@@ -46,27 +47,29 @@ Processes 50+ trading pairs simultaneously with sub-100ms signal-to-execution la
 ### themockingjet.github.io
 id: portfolio
 interests: frontend, web, design
+match_reason: A React interface combines a Markdown content pipeline with static web deployment.
 status: beta
 url: https://github.com/themockingjet/themockingjet.github.io
 stack: React, TypeScript, Vite, GitHub Pages
 
-This site. Built from scratch — no templates, no themes. Markdown-driven content, CSS Modules, motion animations.
+This site. Built from scratch with Markdown-driven content, CSS Modules, and an optional animated journey.
 
 [Context]
 Most developer portfolios look the same — template-driven, static pages that say nothing about how the person thinks. Needed something that felt like a system, not a brochure.
 
 [What It Does]
-Renders all content from markdown at build time. Dashboard-style navigation with motion transitions. Each section is a navigable module, not a scroll target.
+Renders portfolio content from Markdown. A six-destination journey offers direct links, Reading view, and a local route planner.
 
 [Key Decisions]
-Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. CSS Modules over Tailwind for precise scoping. Framer Motion for cinematic micro-interactions.
+Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. CSS Modules provide scoped styling; canvas and GSAP handle optional scenery motion.
 
 [Impact]
-Lighthouse performance score 90+ on mobile. Full accessibility compliance (axe-clean). Sub-2s load time on 3G.
+The portfolio exposes its Markdown source and supports a static GitHub Pages deployment. Local accessibility and performance checks are documented in the repository.
 
 ### Discord Axie Infinity Marketplace
 id: discord-marketplace
 interests: automation, backend, real-time
+match_reason: An archived Node.js bot handled live listings and automated marketplace coordination.
 status: deprecated
 stack: Discord.js, MongoDB, JavaScript, Node.js
 
@@ -87,6 +90,7 @@ Handled 200+ daily transactions at peak. Reduced buyer-seller coordination time 
 ### SecondLife AFK Bot
 id: secondlife-afk-bot
 interests: automation, desktop
+match_reason: An AutoHotkey script automated desktop session monitoring and input.
 status: deprecated
 stack: AutoHotkey
 
@@ -107,6 +111,7 @@ Maintained 24/7 uptime for earning sessions. Zero manual reconnections needed du
 ### Ragnarok Private Server Auto-Quest
 id: ragnarok-auto-quest
 interests: automation, desktop
+match_reason: An AutoHotkey script automated a repeated desktop game workflow.
 status: deprecated
 stack: AutoHotkey
 

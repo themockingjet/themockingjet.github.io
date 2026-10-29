@@ -20,7 +20,7 @@ export function rankProjects(projects: ProjectData[], interests: string[], limit
 export function createBriefing(stops: RouteStop[], profileUrl: string): string {
   const lines = ['# Jet — selected work', '']
   for (const { project, matchedInterests } of stops) {
-    lines.push(`## ${project.title}`, '', project.description, '', `Matched interests: ${matchedInterests.join(', ')}`, '')
+    lines.push(`## ${project.title}`, '', project.description, '', `Why it matches: ${project.matchReason}`, '', `Matched interests: ${matchedInterests.join(', ')}`, '')
     if (project.url) lines.push(`Repository: ${project.url}`, '')
   }
   lines.push(`Profile: ${profileUrl}`, '')

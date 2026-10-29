@@ -7,6 +7,7 @@ const mockProjects: ProjectData[] = [
   {
     id: 'alpha-project',
     interests: ['web'],
+    matchReason: 'A web interface.',
     title: 'Alpha Project',
     status: 'active',
     url: 'https://example.com',
@@ -20,6 +21,7 @@ const mockProjects: ProjectData[] = [
   {
     id: 'beta-project',
     interests: ['automation'],
+    matchReason: 'An automated process.',
     title: 'Beta Project',
     status: 'beta',
     url: '#',

@@ -2,7 +2,7 @@ import { createBriefing, rankProjects } from '../../../src/lib/route'
 import type { ProjectData } from '../../../src/lib/parsePortfolio'
 
 const project = (id: string, interests: string[], url = ''): ProjectData => ({
-  id, interests, title: id, status: '', url, stack: [], description: `${id} description`, details: [],
+  id, interests, matchReason: `${id} reason`, title: id, status: '', url, stack: [], description: `${id} description`, details: [],
 })
 
 describe('route planning', () => {
@@ -19,6 +19,7 @@ describe('route planning', () => {
   it('exports authored descriptions and only existing repository links', () => {
     const brief = createBriefing(rankProjects(projects, ['automation'], 3), 'https://example.org/profile')
     expect(brief).toContain('two description')
+    expect(brief).toContain('Why it matches: two reason')
     expect(brief).toContain('Matched interests: automation')
     expect(brief).toContain('Repository: https://example.com')
     expect(brief).toContain('Profile: https://example.org/profile')

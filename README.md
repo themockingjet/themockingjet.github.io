@@ -30,7 +30,7 @@ Vitest covers parsing, route ranking, briefing generation, simulator transitions
 
 ## Content and features
 
-`src/content/portfolio.md` is the portfolio source of truth. Each project needs a unique lowercase kebab-case `id` and at least one unique lowercase kebab-case `interests` tag. These fields drive stable project fragments and route matching; the parser rejects invalid or duplicate values. Project details, skills, biography and verified links remain in the same file.
+`src/content/portfolio.md` is the portfolio source of truth. Each project needs a unique lowercase kebab-case `id`, at least one unique lowercase kebab-case `interests` tag, and a `match_reason` explaining its relevance. These fields drive stable project fragments and route matching; the parser rejects missing or invalid values. Project details, skills, biography and verified links remain in the same file.
 
 The planner ranks projects by selected authored tags and can export a local Markdown briefing. The lab uses fixed synthetic events; it does not contact a service or execute a real action. Reading view and motion settings are stored locally when storage is available. System reduced-motion settings override full background motion.
 
