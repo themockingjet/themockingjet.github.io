@@ -1,0 +1,22 @@
+.track { display: flex; overflow-x: auto; overflow-y: hidden; height: 100dvh; padding-top: var(--topbar-height); padding-bottom: 82px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.track::-webkit-scrollbar { display: none; }
+.panel { flex: 0 0 100%; min-width: 0; overflow-y: auto; overscroll-behavior-y: contain; scroll-snap-align: start; }
+.readingTrack { display: block; height: auto; overflow: visible; padding-bottom: 82px; }
+.readingTrack .panel { overflow: visible; }
+.reading { position: fixed; z-index: 101; top: 55px; left: .5rem; min-height: 38px; padding: .4rem .7rem; color: var(--color-text); background: var(--color-bg-surface); border: 1px solid var(--color-border); font: inherit; }
+.itinerary { position: fixed; z-index: 90; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: clamp(.25rem, 2vw, 1.5rem); padding: .5rem max(.5rem, env(safe-area-inset-right)) max(.5rem, env(safe-area-inset-bottom)) max(.5rem, env(safe-area-inset-left)); background: var(--topbar-bg); border-top: 1px solid var(--color-border); }
+.position { position: absolute; left: clamp(1rem, 5vw, 4.5rem); display: grid; gap: .2rem; color: var(--color-text-muted); font-size: .75rem; }
+.position strong { color: var(--color-text); font-size: .9rem; }
+.itinerary a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .2rem; min-height: 56px; min-width: 44px; color: var(--color-text-muted); font-size: .7rem; text-align: center; }
+.itinerary a[aria-current] { color: var(--color-text); }
+.planet { width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #d4f3ef, #5b8793 50%, #15202e 85%); }
+.itinerary a:nth-of-type(2) .planet, .itinerary a:nth-of-type(6) .planet { background: radial-gradient(circle at 30% 25%, #ffe4ad, #aa8050 50%, #25202a 85%); }
+.itinerary a:nth-of-type(3) .planet { background: radial-gradient(circle at 30% 25%, #f4c1aa, #9c6054 50%, #25202a 85%); }
+.itinerary a:nth-of-type(4) .planet { background: radial-gradient(circle at 30% 25%, #dcdcff, #7179aa 50%, #15202e 85%); }
+.itinerary a:nth-of-type(5) .planet { background: radial-gradient(circle at 30% 25%, #d7f3da, #709b88 50%, #15202e 85%); }
+.itinerary a[aria-current] .planet { outline: 1px solid var(--color-text); outline-offset: 4px; }
+.itinerary button { min-width: 44px; min-height: 44px; border: 0; background: transparent; color: var(--color-text); font-size: 1.2rem; }
+.itinerary button:disabled { opacity: .3; }
+@media (max-width: 700px) { .reading { top: 55px; left: .5rem; right: auto; font-size: .75rem; } }
+@media (max-width: 1100px) { .position { display: none; } }
+@media (max-width: 600px) { .itinerary { gap: 0; } .itinerary a { flex: 1; font-size: .6rem; } .itinerary button { min-width: 32px; } }

@@ -5,6 +5,8 @@ import type { ProjectData } from '../../../src/lib/parsePortfolio'
 
 const mockProjects: ProjectData[] = [
   {
+    id: 'alpha-project',
+    interests: ['web'],
     title: 'Alpha Project',
     status: 'active',
     url: 'https://example.com',
@@ -16,6 +18,8 @@ const mockProjects: ProjectData[] = [
     ],
   },
   {
+    id: 'beta-project',
+    interests: ['automation'],
     title: 'Beta Project',
     status: 'beta',
     url: '#',
@@ -68,9 +72,9 @@ describe('Projects component', () => {
       const user = userEvent.setup()
       render(<Projects projects={mockProjects} />)
       const detailBtn = screen.getAllByRole('button', { name: /details/i })[0]
+      expect(screen.getByText('Needed a solution.')).not.toBeVisible()
       await user.click(detailBtn)
-      expect(screen.getByText('Context')).toBeInTheDocument()
-      expect(screen.getByText('Needed a solution.')).toBeInTheDocument()
+      expect(screen.getByText('Needed a solution.')).toBeVisible()
     })
 
     it('should collapse details when the user clicks collapse', async () => {
@@ -80,6 +84,7 @@ describe('Projects component', () => {
       await user.click(detailBtn)
       const lessBtn = screen.getByRole('button', { name: /collapse/i })
       await user.click(lessBtn)
+      expect(screen.getByText('Needed a solution.')).not.toBeVisible()
       expect(screen.getByRole('button', { name: /expand|details/i })).toBeInTheDocument()
     })
   })

@@ -32,8 +32,8 @@ describe('Hero component', () => {
       expect(screen.getByText('Earth')).toBeInTheDocument()
     })
 
-    it('should render a decorative initial letter', () => {
-      expect(screen.getByText('T')).toBeInTheDocument()
+    it('should render decorative lens artwork', () => {
+      expect(document.querySelector('svg[aria-hidden="true"]')).toBeInTheDocument()
     })
   })
 
@@ -46,7 +46,7 @@ describe('Hero component', () => {
 
   describe('external links', () => {
     it('should link to the GitHub profile in a new tab', () => {
-      const link = screen.getByRole('link')
+      const link = screen.getByRole('link', { name: /github profile/i })
       expect(link).toHaveAttribute('href', 'https://github.com/testuser')
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')

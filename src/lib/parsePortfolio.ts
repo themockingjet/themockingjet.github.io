@@ -17,6 +17,8 @@ function parseFrontmatter(raw: string): { data: Record<string, string>; content:
 
 export interface HeroData {
   name: string
+  headline?: string
+  contactHeadline?: string
   title: string
   tagline: string
   location: string
@@ -29,6 +31,8 @@ export interface ProjectDetail {
 }
 
 export interface ProjectData {
+  id: string
+  interests: string[]
   title: string
   status: string
   url: string
@@ -75,6 +79,7 @@ function splitByH2(body: string): Record<string, string> {
 
 function parseProjects(raw: string): ProjectData[] {
   const projects: ProjectData[] = []
+  const ids = new Set<string>()
   const blocks = raw.split(/^### /m).filter(Boolean)
 
   for (const block of blocks) {
@@ -120,7 +125,19 @@ function parseProjects(raw: string): ProjectData[] {
       ? meta.stack.split(',').map((s) => s.trim()).filter(Boolean)
       : []
 
+    const id = meta.id ?? ''
+    const interests = (meta.interests ?? '').split(',').map((tag) => tag.trim()).filter(Boolean)
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id) || ids.has(id)) {
+      throw new Error(`Project "${title}" must have a unique lowercase kebab-case id`)
+    }
+    if (interests.length === 0 || interests.some((tag) => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag)) || new Set(interests).size !== interests.length) {
+      throw new Error(`Project "${title}" must have unique lowercase kebab-case interest tags`)
+    }
+    ids.add(id)
+
     projects.push({
+      id,
+      interests,
       title,
       status: meta.status ?? '',
       url: meta.url ?? '',
@@ -221,6 +238,8 @@ export function parsePortfolio(raw: string): PortfolioData {
   return {
     hero: {
       name: data.name ?? '',
+      headline: data.headline ?? '',
+      contactHeadline: data.contact_headline ?? '',
       title: data.title ?? '',
       tagline: data.tagline ?? '',
       location: data.location ?? '',

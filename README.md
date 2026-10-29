@@ -1,82 +1,41 @@
-# themockingjet.github.io
+# Jet's portfolio
 
-Personal portfolio of **Jet** — Associate Software Engineer from the Philippines.
+A static React portfolio for Jet, an Associate Software Engineer in the Philippines. The site presents six destinations as a horizontal journey and offers a vertical Reading view. Project content is authored in Markdown; the lab is a local synthetic simulation.
 
-**Live:** https://themockingjet.github.io  
-**Raw (AI-readable):** https://themockingjet.github.io/raw/portfolio.md
+Live: https://themockingjet.github.io  
+Raw content: https://themockingjet.github.io/raw/portfolio.md
 
----
+## Development
 
-## Stack
+Use Node.js 22, matching CI and GitHub Pages deployment.
 
-- React 19 + Vite 8 + TypeScript 6
-- CSS Modules (no Tailwind)
-- [motion](https://motion.dev) for panel transitions
-- Inline `parseFrontmatter()` for frontmatter parsing (browser-safe, zero dependencies)
-
----
-
-## Quick Start
-
-```bash
-npm install
+```sh
+npm ci
 npm run dev
 ```
 
-## Scripts
+The development server is available at `http://localhost:5173`. The production build is static and goes to `dist/`; `npm run preview` serves it locally. Vite copies the content source to `dist/raw/portfolio.md`. The local `.experimental/` prototype is not a production dependency or build artifact.
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server (port 5173) |
-| `npm run build` | Type-check + production build |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | ESLint |
-| `npx vitest run` | Unit + integration tests |
-| `npx playwright test` | E2E tests (requires `npx playwright install`) |
+## Validation
 
-## Build
-
-Output is in `dist/`. The file `dist/raw/portfolio.md` is the AI-readable version served at `/raw/portfolio.md` on GitHub Pages.
-
----
-
-## Testing
-
-- **Unit/Integration:** Vitest + Testing Library (`tests/unit/`, `tests/integration/`)
-- **E2E:** Playwright (`tests/e2e/`)
-- **Accessibility:** axe-core via `@axe-core/playwright` — runs full WCAG 2 AA audit in real browsers
-
-```bash
-npx vitest run          # 58 unit/integration tests
-npx playwright test     # E2E (desktop + mobile viewports)
+```sh
+npm run lint
+npm test
+npm run build
+npx playwright install chromium
+npm run test:e2e
 ```
 
----
+Vitest covers parsing, route ranking, briefing generation, simulator transitions and component interactions. Playwright covers desktop and emulated mobile navigation, key interactions and axe checks. Emulation does not replace testing on physical mobile hardware. CI runs these commands on Node 22 for pull requests and pushes to `dev` and `main`.
 
-## Content Authoring
+## Content and features
 
-All portfolio content lives in a single file:
+`src/content/portfolio.md` is the portfolio source of truth. Each project needs a unique lowercase kebab-case `id` and at least one unique lowercase kebab-case `interests` tag. These fields drive stable project fragments and route matching; the parser rejects invalid or duplicate values. Project details, skills, biography and verified links remain in the same file.
 
-```
-src/content/portfolio.md
-```
+The planner ranks projects by selected authored tags and can export a local Markdown briefing. The lab uses fixed synthetic events; it does not contact a service or execute a real action. Reading view and motion settings are stored locally when storage is available. System reduced-motion settings override full background motion.
 
-Edit this file to update the portfolio. No other files need to change.
+React, TypeScript, Vite and CSS Modules implement the UI. GSAP animates the canvas scenery; Latin-subset WOFF2 versions of Space Grotesk and Source Sans 3 are bundled with their OFL licenses in `public/fonts/`. Unsupported characters use the system font fallback.
 
----
+## Deployment and rollback
 
-## Project Structure
-
-```
-src/
-  components/     Component modules (TSX + CSS Modules)
-  content/        portfolio.md (single source of truth)
-  lib/            Parsing, icons, utilities
-  styles/         Global CSS (variables, themes, resets)
-tests/
-  unit/           Component unit tests
-  integration/    Cross-component integration tests
-  e2e/            Playwright browser tests
-public/
-  textures/       Background textures
-```
+Pushes to `main` trigger the GitHub Pages workflow. Review the production build and validation results before merging. The previous deployment commit is the rollback reference; revert the migration through a follow-up commit and let the Pages workflow redeploy if needed.

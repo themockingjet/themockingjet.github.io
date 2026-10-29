@@ -1,116 +1,28 @@
-import { motion, useScroll, useTransform } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
 import styles from './Hero.module.css'
 import type { HeroData } from '../../lib/parsePortfolio'
-import { EASE, STAGGER_DELAY } from '../../lib/motion'
 
-interface HeroProps {
-  data: HeroData
-}
-
-const item = {
-  hidden: { opacity: 0, y: 18 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
-}
-
-// Divider draws from left to right
-const lineReveal = {
-  hidden: { scaleX: 0, originX: 0 },
-  show:   { scaleX: 1, originX: 0, transition: { duration: 0.55, ease: EASE } },
-}
-
-const TYPE_MS   = 55
-const START_MS  = 300
-
-function TypewriterName({ name }: { name: string }) {
-  const [displayed, setDisplayed] = useState('')
-  const [done, setDone] = useState(false)
-
-  useEffect(() => {
-    let cancelled = false
-    let i = 0
-    const t = setTimeout(() => {
-      const tick = () => {
-        if (cancelled) return
-        i++
-        setDisplayed(name.slice(0, i))
-        if (i < name.length) setTimeout(tick, TYPE_MS)
-        else setDone(true)
-      }
-      tick()
-    }, START_MS)
-    return () => {
-      cancelled = true
-      clearTimeout(t)
-    }
-  }, [name])
-
-  // Full name is always in the DOM (untyped portion opacity:0),
-  // so h1 width never changes during the typewriter animation.
-  const untyped = done ? '' : name.slice(displayed.length)
-  return (
-    <h1 className={styles.name} aria-label={name}>
-      <span aria-hidden="true">{displayed}</span>
-      <span className={`${styles.caret} ${done ? styles.caretBlink : ''}`} aria-hidden="true">|</span>
-      {untyped && <span aria-hidden="true" className={styles.nameUntyped}>{untyped}</span>}
-    </h1>
-  )
-}
-
-export default function Hero({ data }: HeroProps) {
-  const initial = data.name.charAt(0).toUpperCase()
-  const heroRef = useRef<HTMLElement>(null)
-
-  // Parallax: decor letter drifts up as the hero scrolls out of view
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  })
-  const decorY = useTransform(scrollYProgress, [0, 1], [0, -220])
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -60])
-
-  return (
-    <section ref={heroRef} className={styles.hero} aria-label="Introduction">
-      <motion.span
-        className={styles.decor}
-        aria-hidden="true"
-        style={{ y: decorY }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.55 }}
-        transition={{ duration: 2.2, delay: 0.1, ease: EASE }}
-      >
-        {initial}
-      </motion.span>
-
-      <motion.div
-        className={styles.content}
-        style={{ y: contentY }}
-        variants={STAGGER_DELAY}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.p className={styles.label} variants={item}>Portfolio</motion.p>
-
-        <TypewriterName name={data.name} />
-
-        <motion.hr className={styles.divider} variants={lineReveal} />
-        <motion.p className={styles.title} variants={item}>{data.title}</motion.p>
-        {data.tagline && (
-          <motion.p className={styles.tagline} variants={item}>{data.tagline}</motion.p>
-        )}
-
-        <motion.div className={styles.badges} variants={item}>
-          <span className={styles.badge}>{data.location}</span>
-          <a
-            href={data.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.badge}
-          >
-            github<span className={styles.badgeArrow}>↗</span>
-          </a>
-        </motion.div>
-      </motion.div>
-    </section>
-  )
+export default function Hero({ data }: { data: HeroData }) {
+  return <section className={styles.hero} aria-label="Introduction">
+    <div className={styles.content}>
+      <p className={styles.label}>{data.name} / {data.title}</p>
+      <h1>{data.headline || data.name}</h1>
+      <p className={styles.title}><span>{data.title}</span> · <span>{data.location}</span></p>
+      <p className={styles.tagline}>{data.tagline}</p>
+      <div className={styles.actions}><a href="#projects">Explore my work ↗</a><a href="#route">Plot your route →</a></div>
+      <a className={styles.profile} href={data.github} target="_blank" rel="noopener noreferrer">GitHub profile ↗</a>
+    </div>
+    <svg className={styles.lens} viewBox="0 0 800 720" aria-hidden="true">
+      <defs>
+        <radialGradient id="lens-halo"><stop stopColor="#1b384f" stopOpacity="0"/><stop offset=".48" stopColor="#426b81" stopOpacity=".09"/><stop offset=".65" stopColor="#83b6c6" stopOpacity=".16"/><stop offset="1" stopColor="#1b384f" stopOpacity="0"/></radialGradient>
+        <radialGradient id="event-horizon"><stop offset=".75" stopColor="#03070d"/><stop offset=".93" stopColor="#07101b"/><stop offset="1" stopColor="#9ac8cf"/></radialGradient>
+        <linearGradient id="accretion"><stop stopColor="#8faebd" stopOpacity="0"/><stop offset=".2" stopColor="#9ec9d3"/><stop offset=".48" stopColor="#ffedc8"/><stop offset=".7" stopColor="#d5a368"/><stop offset="1" stopColor="#8faebd" stopOpacity="0"/></linearGradient>
+        <filter id="disk-glow" x="-60%" y="-80%" width="220%" height="260%"><feGaussianBlur stdDeviation="12"/></filter>
+      </defs>
+      <circle cx="412" cy="348" r="310" fill="url(#lens-halo)"/>
+      <g transform="rotate(-23 412 348)" fill="none" stroke="url(#accretion)"><ellipse cx="412" cy="348" rx="330" ry="74" strokeWidth="18" opacity=".34" filter="url(#disk-glow)"/><ellipse cx="412" cy="348" rx="330" ry="74" strokeWidth="2"/><ellipse cx="412" cy="348" rx="292" ry="64" strokeWidth="4" opacity=".5"/><ellipse cx="412" cy="348" rx="263" ry="53" opacity=".7"/></g>
+      <circle cx="412" cy="348" r="140" fill="url(#event-horizon)"/><path d="M274 360a140 140 0 1 1 276-24" fill="none" stroke="#e0eee6" strokeWidth="2" opacity=".8"/>
+      <g transform="rotate(-23 412 348)"><path d="M82 348a330 74 0 0 0 660 0" fill="none" stroke="url(#accretion)" strokeWidth="4"/></g>
+      <g stroke="#9eb7c1" strokeWidth=".6" opacity=".55"><path d="M412 73v34m0 482v34M133 348h28m505 0h30"/><circle cx="412" cy="348" r="246" fill="none" strokeDasharray="1 12"/></g>
+    </svg>
+  </section>
 }

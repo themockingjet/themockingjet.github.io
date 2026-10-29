@@ -4,6 +4,8 @@ title: Associate Software Engineer
 location: Philippines
 github: https://github.com/themockingjet
 tagline: Backend engineer building automation systems for teams that ship fast.
+headline: Built to go beyond manual.
+contact_headline: What could we make effortless?
 ---
 
 ## About
@@ -22,6 +24,8 @@ Right now I'm focused on {building services that hold up without me babysitting 
 ## Projects
 
 ### Binance Trading Bot
+id: binance-trading-bot
+interests: automation, real-time, backend
 status: beta
 stack: Bun, TypeScript, Binance API, Binance Websocket, TA-Lib, Svelte, Tailwind CSS
 
@@ -40,6 +44,8 @@ Used Bun for fast startup and native TypeScript execution. TA-Lib handles indica
 Processes 50+ trading pairs simultaneously with sub-100ms signal-to-execution latency. Eliminated manual chart monitoring entirely.
 
 ### themockingjet.github.io
+id: portfolio
+interests: frontend, web, design
 status: beta
 url: https://github.com/themockingjet/themockingjet.github.io
 stack: React, TypeScript, Vite, GitHub Pages
@@ -59,6 +65,8 @@ Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. 
 Lighthouse performance score 90+ on mobile. Full accessibility compliance (axe-clean). Sub-2s load time on 3G.
 
 ### Discord Axie Infinity Marketplace
+id: discord-marketplace
+interests: automation, backend, real-time
 status: deprecated
 stack: Discord.js, MongoDB, JavaScript, Node.js
 
@@ -77,6 +85,8 @@ MongoDB for flexible NFT metadata schemas. Discord.js for real-time event handli
 Handled 200+ daily transactions at peak. Reduced buyer-seller coordination time from minutes to seconds.
 
 ### SecondLife AFK Bot
+id: secondlife-afk-bot
+interests: automation, desktop
 status: deprecated
 stack: AutoHotkey
 
@@ -95,6 +105,8 @@ AutoHotkey chosen for direct Windows input simulation without dependencies. Mini
 Maintained 24/7 uptime for earning sessions. Zero manual reconnections needed during active use.
 
 ### Ragnarok Private Server Auto-Quest
+id: ragnarok-auto-quest
+interests: automation, desktop
 status: deprecated
 stack: AutoHotkey
 

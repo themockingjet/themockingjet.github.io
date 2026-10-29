@@ -4,6 +4,7 @@ import App from '../../src/App'
 
 describe('Theme switching', () => {
   beforeEach(() => {
+    localStorage.clear()
     document.documentElement.removeAttribute('data-theme')
     document.documentElement.removeAttribute('data-mode')
   })
@@ -48,6 +49,7 @@ describe('Theme switching', () => {
 
 describe('Dark mode toggle', () => {
   beforeEach(() => {
+    localStorage.clear()
     document.documentElement.removeAttribute('data-mode')
   })
 
@@ -74,4 +76,18 @@ describe('Dark mode toggle', () => {
       expect(document.documentElement.getAttribute('data-mode')).toBeNull()
     })
   })
+})
+
+it('restores the selected accent and light mode after remount', async () => {
+  localStorage.clear()
+  const user = userEvent.setup()
+  const view = render(<App />)
+  await user.click(screen.getByRole('button', { name: /theme/i }))
+  await user.click(screen.getByRole('option', { name: /ocean/i }))
+  await user.click(screen.getByRole('button', { name: /switch to light/i }))
+  view.unmount()
+  render(<App />)
+  expect(document.documentElement).toHaveAttribute('data-theme', 'ocean')
+  expect(document.documentElement).toHaveAttribute('data-mode', 'light')
+  localStorage.clear()
 })
