@@ -1,10 +1,11 @@
 # Migration validation
 
-The release review is still in progress. Hosted CI passed on the current branch revision; emulated browser checks do not substitute for physical-device testing.
+The migration's desktop, zoom, accessibility and performance checks are recorded below. The 2026-10-29 full-motion refinement also received a physical Huawei nova 5T review and a fresh performance measurement. Hosted CI remains pending for the final pushed commit.
 
 ## Local checks, 2026-10-29
 
 - Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `611fcef`, including the responsive layout regression checks.
+- Final local refinement, Node 24.15.0: lint, production build, 68 Vitest tests, and 57 Playwright desktop/mobile tests passed; one desktop touch-only case was skipped. The full-motion physical-phone review is recorded below. Hosted Node 22 CI is pending for the final pushed commit.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
 - A genuine 200% Chromium browser-zoom review used the browser zoom API (not viewport emulation): Chromium reported zoom 2, `innerWidth` 640, `innerHeight` 450 and `devicePixelRatio` 2. All six destinations were checked for panel/document horizontal overflow and itinerary bounds. The review found an About decorative glow overflow, fixed by constraining it to its section. The expanded responsive Playwright check also exposed a long project title overflowing its narrow card on Linux; the title now wraps. Captures: [home](screenshots/zoom200-home.png), [route](screenshots/zoom200-route.png), [projects](screenshots/zoom200-projects.png), [lab](screenshots/zoom200-lab.png), [about](screenshots/zoom200-about.png), [contact](screenshots/zoom200-contact.png).
@@ -29,16 +30,28 @@ After the WOFF2 and layout changes, a second comparison used three fresh context
 
 Across eleven subsequent current-build contexts in these repeat runs, observed CLS was 0. The initial 0.0258 outlier remains unattributed, but it is below the 0.1 target; the repeated current-build results meet that target.
 
-The canvas lifecycle has an integration check for StrictMode setup, hidden-tab pause, resumption, Off mode, reduced motion and teardown. This does not prove all browser animation and gesture behavior.
+### Full-motion refinement performance, 2026-10-29
 
-Additional Chromium checks exercised keyboard navigation and form arrow keys, vertical overflow before wheel travel, horizontal wheel input, unprevented control-wheel zoom gestures, and an emulated sideways touch gesture. Physical touch hardware remains untested.
+Five fresh Chromium contexts used the 390×844 viewport, 4× CPU slowdown, 150 ms latency and 1.6 Mbps throughput, with five seconds of observation. The star field ran at full motion. Median LCP was 1.776 s and median CLS was 0; all five contexts recorded CLS 0. This meets the 2.5 s LCP and 0.1 CLS targets. For historical context, the earlier Node 24 baseline median was 2.264 s LCP and 0.0008 CLS. That baseline comparison emulated reduced motion, so it is not a controlled comparison with the current always-full animation setting.
+
+The canvas lifecycle has an integration check for StrictMode setup, hidden-tab pause, resumption and teardown. Motion is always full while the tab is visible; the previous motion selector and Reading view were removed by design.
+
+Additional Chromium checks exercised keyboard navigation and form arrow keys, vertical overflow before wheel travel, horizontal wheel input, unprevented control-wheel zoom gestures, and an emulated sideways touch gesture.
 
 All six production destinations were opened at 390×844 and 1440×900 CSS pixels and compared with the approved prototype previews. No browser errors or horizontal document overflow appeared at the emulated mobile width. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
 
-At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary.
+At 320×700 CSS pixels, a visual inspection confirmed that the hero content and itinerary appear in the initial viewport and the hero panel has no vertical overflow. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary.
 
 A Chromium keyboard Tab traversal at 320×800 and 640×450 CSS pixels reached 44 and 45 focus stops, respectively. Each content control showed `:focus-visible` and remained inside the viewport between the fixed header and destination navigation. The fixed header and itinerary controls themselves were also reached in the sequence. At 320px the previous/next arrows are hidden because they clipped slightly at that width; all six direct destination links remain available, and a layout test checks the arrow bounds at widths where they are shown.
 
-## Outstanding release evidence
+### Physical phone review, 2026-10-29
 
-- Physical-phone testing is unavailable in the current environment; the user confirmed they do not have a phone for this review. Emulated mobile results do not satisfy this requirement.
+- Device: Huawei nova 5T (YAL-L21H), Android 10, Chrome 156.0.8078.47. The device was configured to 720×1560 at density 272 for review; Chrome reported a 423×771 CSS viewport and DPR 2.55.
+- The production preview was opened over wireless ADB reverse on the phone. All six itinerary destinations were opened. The Projects disclosure expanded, the lab duplicate scenario completed, and the Contact GitHub action remained visible. The mobile panels had no horizontal overflow; the fixed navigation no longer covers the last content in scrollable destinations. The home panel had no vertical content overflow.
+- The fixed navigation's bottom clearance was checked at the end of Route, Projects, Lab, About and Contact. The Projects bottom capture shows the final project details above navigation.
+- Preview captures: [home](screenshots/nova5t-home.png), [travel streaks](screenshots/nova5t-transition.png), [projects bottom](screenshots/nova5t-projects-bottom.png), and [contact](screenshots/nova5t-contact.png).
+
+### Remaining release evidence
+
+- Re-run the performance comparison with the current always-full star animation. Earlier measurements used reduced motion and predate this refinement, so they are historical rather than current evidence.
+- Hosted Node 22 checks must run against the final pushed commit before the pull request is marked ready.

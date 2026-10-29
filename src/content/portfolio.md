@@ -52,16 +52,16 @@ status: beta
 url: https://github.com/themockingjet/themockingjet.github.io
 stack: React, TypeScript, Vite, GitHub Pages
 
-This site. Built from scratch with Markdown-driven content, CSS Modules, and an optional animated journey.
+This site. Built from scratch with Markdown-driven content, CSS Modules, and an animated journey.
 
 [Context]
 Most developer portfolios look the same — template-driven, static pages that say nothing about how the person thinks. Needed something that felt like a system, not a brochure.
 
 [What It Does]
-Renders portfolio content from Markdown. A six-destination journey offers direct links, Reading view, and a local route planner.
+Renders portfolio content from Markdown. A six-destination journey offers direct links and a local route planner.
 
 [Key Decisions]
-Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. CSS Modules provide scoped styling; canvas and GSAP handle optional scenery motion.
+Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. CSS Modules provide scoped styling; canvas and GSAP render the animated star field and travel streaks.
 
 [Impact]
 The portfolio exposes its Markdown source and supports a static GitHub Pages deployment. Local accessibility and performance checks are documented in the repository.

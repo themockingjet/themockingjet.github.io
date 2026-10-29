@@ -9,4 +9,4 @@
 .actions a:first-child { background: #e9c18b; color: #17130e; border-radius: 3px; font-weight: 700; }
 .profile { display: inline-block; margin-top: 1.5rem; color: var(--color-text-muted); text-decoration: underline; }
 .lens { position: absolute; width: min(65vw, 850px); right: -3%; top: 50%; transform: translateY(-50%); pointer-events: none; }
-@media (max-width: 700px) { .hero { min-height: 740px; align-items: flex-start; padding-top: 3rem; } .content { width: 100%; } .lens { width: 115%; right: -20%; top: 55%; transform: none; } }
+@media (max-width: 700px) { .hero { height: 100%; min-height: 0; align-items: flex-start; padding: 3rem 1.5rem 1.5rem; } .content { width: 100%; } .lens { width: 112%; right: -19%; top: 39%; transform: none; } }

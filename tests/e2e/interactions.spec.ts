@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
-for (const reading of [false, true]) test(`guided route and briefing work with motion off${reading ? ' in Reading view' : ''}`, async ({ page }) => {
+test('guided route and briefing work', async ({ page }) => {
   await page.goto('/#route')
-  await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
-  if (reading) await page.getByRole('button', { name: 'Reading view' }).click()
   const preview = page.getByRole('heading', { name: /Your suggested route/ }).locator('..')
   await expect(preview).toContainText('Streaming market events feed backend rules')
   const downloadPromise = page.waitForEvent('download')
@@ -25,10 +23,8 @@ for (const reading of [false, true]) test(`guided route and briefing work with m
   await expect(guided).toBeHidden()
 })
 
-test('lab scenarios complete, cancel and reset in reading view with motion off', async ({ page }) => {
+test('lab scenarios complete, cancel and reset', async ({ page }) => {
   await page.goto('/#lab')
-  await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
-  await page.getByRole('button', { name: 'Reading view' }).click()
   const lab = page.getByRole('region', { name: 'See an automation pipeline in action.' })
   await lab.getByLabel('Scenario').selectOption('retry')
   await lab.getByRole('button', { name: 'Run simulation' }).click()
@@ -63,16 +59,6 @@ test('light theme maintains WCAG A and AA checks across destinations', async ({ 
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
     expect(result.violations, `axe in light mode at ${label}`).toEqual([])
   }
-})
-
-test('motion off and system reduced motion suppress decorative transitions', async ({ page }) => {
-  await page.goto('/#skills')
-  const chip = page.locator('#skills li').first()
-  await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
-  await expect(chip).toHaveCSS('transition-duration', '0s')
-  await page.getByRole('combobox', { name: 'Motion' }).selectOption('full')
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await expect(chip).toHaveCSS('transition-duration', '0s')
 })
 
 test('accent choices preserve contrast in light mode', async ({ page }) => {

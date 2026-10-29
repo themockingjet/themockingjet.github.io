@@ -1,6 +1,6 @@
 # Jet's portfolio
 
-A static React portfolio for Jet, an Associate Software Engineer in the Philippines. The site presents six destinations as a horizontal journey and offers a vertical Reading view. Project content is authored in Markdown; the lab is a local synthetic simulation.
+A static React portfolio for Jet, an Associate Software Engineer in the Philippines. The site presents six destinations as a horizontal journey with animated space scenery. Project content is authored in Markdown; the lab is a local synthetic simulation.
 
 Live: https://themockingjet.github.io  
 Raw content: https://themockingjet.github.io/raw/portfolio.md
@@ -32,7 +32,7 @@ Vitest covers parsing, route ranking, briefing generation, simulator transitions
 
 `src/content/portfolio.md` is the portfolio source of truth. Each project needs a unique lowercase kebab-case `id`, at least one unique lowercase kebab-case `interests` tag, and a `match_reason` explaining its relevance. These fields drive stable project fragments and route matching; the parser rejects missing or invalid values. Project details, skills, biography and verified links remain in the same file.
 
-The planner ranks projects by selected authored tags and can export a local Markdown briefing. The lab uses fixed synthetic events; it does not contact a service or execute a real action. Reading view and motion settings are stored locally when storage is available. System reduced-motion settings override full background motion.
+The planner ranks projects by selected authored tags and can export a local Markdown briefing. The lab uses fixed synthetic events; it does not contact a service or execute a real action. Space scenery runs at full motion while the page is visible and pauses in hidden tabs.
 
 React, TypeScript, Vite and CSS Modules implement the UI. GSAP animates the canvas scenery; Latin-subset WOFF2 versions of Space Grotesk and Source Sans 3 are bundled with their OFL licenses in `public/fonts/`. Unsupported characters use the system font fallback.
 

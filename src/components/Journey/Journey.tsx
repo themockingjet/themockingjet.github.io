@@ -9,10 +9,8 @@ const destinations = [
 
 export default function Journey({ children }: { children: ReactNode[] }) {
   const track = useRef<HTMLDivElement>(null)
-  const [reading, setReading] = useState(() => { try { return localStorage.getItem('journey-reading') === 'true' } catch { return false } })
   const [current, setCurrent] = useState(0)
   const currentRef = useRef(0)
-  const readingRef = useRef(reading)
   const lastWheel = useRef(0)
 
   const show = useCallback((index: number, hash = true) => {
@@ -21,8 +19,7 @@ export default function Journey({ children }: { children: ReactNode[] }) {
     currentRef.current = next
     setCurrent(next)
     const panel = track.current?.children[next] as HTMLElement | undefined
-    if (readingRef.current) panel?.scrollIntoView({ block: 'start', behavior: 'auto' })
-    else if (track.current && panel) track.current.scrollTo({ left: panel.offsetLeft, behavior: 'auto' })
+    if (track.current && panel) track.current.scrollTo({ left: panel.offsetLeft, behavior: 'auto' })
     if (hash && location.hash !== `#${destinations[next].id}`) history.pushState(null, '', `#${destinations[next].id}`)
   }, [])
 
@@ -55,7 +52,7 @@ export default function Journey({ children }: { children: ReactNode[] }) {
 
   useEffect(() => {
     const element = track.current
-    if (!element || reading) return
+    if (!element) return
     const wheel = (event: WheelEvent) => {
       if (event.ctrlKey || event.metaKey || (event.target as HTMLElement).closest('input, select, textarea')) return
       const panel = element.children[currentRef.current] as HTMLElement
@@ -70,36 +67,10 @@ export default function Journey({ children }: { children: ReactNode[] }) {
     }
     element.addEventListener('wheel', wheel, { passive: false })
     return () => element.removeEventListener('wheel', wheel)
-  }, [reading, show])
-
-  useEffect(() => {
-    if (!reading) return
-    const onScroll = () => {
-      const panels = track.current?.children
-      if (!panels) return
-      let index = 0
-      for (let i = 0; i < panels.length; i++) {
-        if ((panels[i] as HTMLElement).getBoundingClientRect().top <= window.innerHeight * .4) index = i
-      }
-      if (index !== currentRef.current) { currentRef.current = index; setCurrent(index) }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [reading])
-
-  function toggleReading() {
-    const next = !reading
-    const destination = currentRef.current
-    readingRef.current = next
-    setReading(next)
-    try { localStorage.setItem('journey-reading', String(next)) } catch { /* preferences are optional */ }
-    requestAnimationFrame(() => show(destination, false))
-  }
+  }, [show])
 
   return <>
-    <button className={styles.reading} onClick={toggleReading} aria-pressed={reading}>Reading view</button>
-    <main ref={track} className={`${styles.track} ${reading ? styles.readingTrack : ''}`} onScroll={(event) => {
-      if (readingRef.current) return
+    <main ref={track} className={styles.track} onScroll={(event) => {
       const element = event.currentTarget
       const index = Math.max(0, Math.min(destinations.length - 1, Math.round(element.scrollLeft / element.clientWidth)))
       if (index !== currentRef.current) {

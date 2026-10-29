@@ -10,17 +10,12 @@ test('bundled fonts load without a network dependency', async ({ page }) => {
   expect(loaded).toBe(true)
 })
 
-test('destination links, history and reading view preserve the current place', async ({ page }) => {
+test('destination links and history preserve the current place', async ({ page }) => {
   await page.goto('/#route')
   const nav = page.getByRole('navigation', { name: 'Journey destinations' })
   await expect(nav.getByRole('link', { name: 'Your route' })).toHaveAttribute('aria-current', 'location')
   await nav.getByRole('link', { name: 'The lab' }).click()
   await expect(page).toHaveURL(/#lab$/)
-  await expect(nav.getByRole('link', { name: 'The lab' })).toHaveAttribute('aria-current', 'location')
-  await page.getByRole('button', { name: 'Reading view' }).click()
-  await expect(page.getByRole('button', { name: 'Reading view' })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('heading', { name: 'See an automation pipeline in action.' })).toBeInViewport()
-  await page.getByRole('button', { name: 'Reading view' }).click()
   await expect(nav.getByRole('link', { name: 'The lab' })).toHaveAttribute('aria-current', 'location')
   await page.goBack()
   await expect(nav.getByRole('link', { name: 'Your route' })).toHaveAttribute('aria-current', 'location')
