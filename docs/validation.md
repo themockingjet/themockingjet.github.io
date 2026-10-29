@@ -4,11 +4,11 @@ The release review is still in progress. These results are local checks, not a s
 
 ## Local checks, 2026-10-29
 
-- Node 22.16.0: lint, production build, 69 Vitest tests, and 59 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. The hosted Node 22 workflow passed for source commit `fa9bcb3`, including the added 640px layout check.
+- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commits `fa9bcb3` and `703c98e`; the latest project-chart change still needs hosted validation.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
 - At a 640 CSS-pixel viewport (the layout width commonly produced by 200% zoom on a 1280px desktop), destination controls and the Contact action remained reachable in desktop and emulated-mobile browser projects. This viewport check is a proxy; actual browser zoom and visual reflow still need review.
-- Production-preview captures: [desktop home](screenshots/desktop-home.png), [mobile-sized home](screenshots/mobile-home.png), and [desktop lab](screenshots/desktop-lab.png). The mobile capture is emulated.
+- Production-preview captures: [desktop home](screenshots/desktop-home.png), [desktop projects](screenshots/desktop-projects.png), [desktop lab](screenshots/desktop-lab.png), and [mobile home](screenshots/mobile-home.png), [route](screenshots/mobile-route.png), [projects](screenshots/mobile-projects.png), [lab](screenshots/mobile-lab.png), [about](screenshots/mobile-about.png), and [contact](screenshots/mobile-contact.png). Mobile screenshots use a 390px emulated viewport; they are not physical-device captures.
 
 ### Lab performance comparison
 
@@ -28,6 +28,8 @@ After the WOFF2 and layout changes, a second comparison used three fresh context
 The canvas lifecycle has an integration check for StrictMode setup, hidden-tab pause, resumption, Off mode, reduced motion and teardown. This does not prove all browser animation and gesture behavior.
 
 Additional Chromium checks exercised keyboard navigation and form arrow keys, vertical overflow before wheel travel, horizontal wheel input, unprevented control-wheel zoom gestures, and an emulated sideways touch gesture. Physical touch hardware remains untested.
+
+All six production destinations were opened in the emulated 390×844 viewport and captured for comparison with the approved prototype previews. No browser errors or horizontal document overflow appeared in the captured states. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
 
 At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary. This is not a complete focus audit or 200% browser-zoom review.
 
