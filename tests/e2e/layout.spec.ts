@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test'
 
-for (const width of [320, 375, 768, 1440, 1920]) {
-  test(`journey controls remain reachable at ${width}px`, async ({ page }) => {
+for (const width of [320, 375, 640, 768, 1440, 1920]) {
+  const zoomNote = width === 640 ? ' (200% equivalent on a 1280px desktop)' : ''
+  test(`journey controls remain reachable at ${width}px${zoomNote}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 800 })
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Journey destinations' })
