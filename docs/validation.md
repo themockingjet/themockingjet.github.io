@@ -29,13 +29,13 @@ The canvas lifecycle has an integration check for StrictMode setup, hidden-tab p
 
 Additional Chromium checks exercised keyboard navigation and form arrow keys, vertical overflow before wheel travel, horizontal wheel input, unprevented control-wheel zoom gestures, and an emulated sideways touch gesture. Physical touch hardware remains untested.
 
-All six production destinations were opened in the emulated 390×844 viewport and captured for comparison with the approved prototype previews. No browser errors or horizontal document overflow appeared in the captured states. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
+All six production destinations were opened at 390×844 and 1440×900 CSS pixels and compared with the approved prototype previews. No browser errors or horizontal document overflow appeared at the emulated mobile width. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
 
 At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary. This is not a complete focus audit or 200% browser-zoom review.
 
 ## Outstanding release evidence
 
-- Compare every destination against the approved desktop and mobile prototype and complete an actual 200% browser-zoom review. The 640px CSS viewport check is only a proxy for zoom reflow.
+- Complete an actual 200% browser-zoom review. The 640px CSS viewport check is only a proxy for zoom reflow.
 - Physical-phone testing is unavailable in the current environment; the user confirmed they do not have a phone for this review. Emulated mobile results do not satisfy this requirement.
 - Investigate the increased lab CLS and measure on representative hardware.
 - Verify animation cleanup, gestures, focus and overflow across supported states and record the results.
