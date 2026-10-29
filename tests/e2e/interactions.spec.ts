@@ -74,3 +74,14 @@ test('motion off and system reduced motion suppress decorative transitions', asy
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await expect(chip).toHaveCSS('transition-duration', '0s')
 })
+
+test('accent choices preserve contrast in light mode', async ({ page }) => {
+  await page.goto('/#route')
+  await page.getByRole('button', { name: 'Switch to light mode' }).click()
+  for (const theme of ['Amber', 'Sage', 'Ocean', 'Ember', 'Violet', 'Slate']) {
+    await page.getByRole('button', { name: /^Theme:/ }).click()
+    await page.getByRole('option', { name: theme }).click()
+    const result = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze()
+    expect(result.violations, `light ${theme} contrast`).toEqual([])
+  }
+})
