@@ -7,7 +7,7 @@ The release review is still in progress. These results are local checks, not a s
 - Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `c0d525f`, including the project-chart accessibility check.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
-- At a 640 CSS-pixel viewport (the layout width commonly produced by 200% zoom on a 1280px desktop), destination controls and the Contact action remained reachable in desktop and emulated-mobile browser projects. This viewport check is a proxy; actual browser zoom and visual reflow still need review.
+- A genuine 200% Chromium browser-zoom review used the browser zoom API (not viewport emulation): Chromium reported zoom 2, `innerWidth` 640, `innerHeight` 450 and `devicePixelRatio` 2. All six destinations were checked for panel/document horizontal overflow and itinerary bounds. An About-section decorative glow overflow was found, fixed by constraining it to its section, and the same destination-width check now runs in the responsive Playwright test. Captures: [home](screenshots/zoom200-home.png), [route](screenshots/zoom200-route.png), [projects](screenshots/zoom200-projects.png), [lab](screenshots/zoom200-lab.png), [about](screenshots/zoom200-about.png), [contact](screenshots/zoom200-contact.png).
 - Production-preview captures: desktop [home](screenshots/desktop-home.png), [route](screenshots/desktop-route.png), [projects](screenshots/desktop-projects.png), [lab](screenshots/desktop-lab.png), [about](screenshots/desktop-about.png), [contact](screenshots/desktop-contact.png); mobile [home](screenshots/mobile-home.png), [route](screenshots/mobile-route.png), [projects](screenshots/mobile-projects.png), [lab](screenshots/mobile-lab.png), [about](screenshots/mobile-about.png), [contact](screenshots/mobile-contact.png). Mobile screenshots use a 390px emulated viewport; they are not physical-device captures.
 
 ### Lab performance comparison
@@ -33,11 +33,10 @@ Additional Chromium checks exercised keyboard navigation and form arrow keys, ve
 
 All six production destinations were opened at 390×844 and 1440×900 CSS pixels and compared with the approved prototype previews. No browser errors or horizontal document overflow appeared at the emulated mobile width. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
 
-At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary. This is not a complete focus audit or 200% browser-zoom review.
+At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary. This is not a complete focus audit.
 
 ## Outstanding release evidence
 
-- Complete an actual 200% browser-zoom review. The 640px CSS viewport check is only a proxy for zoom reflow.
 - Physical-phone testing is unavailable in the current environment; the user confirmed they do not have a phone for this review. Emulated mobile results do not satisfy this requirement.
 - Investigate the increased lab CLS and measure on representative hardware.
 - Verify animation cleanup, gestures, focus and overflow across supported states and record the results.
