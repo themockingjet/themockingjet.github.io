@@ -7,8 +7,8 @@
 .cornerBL, .cornerBR { display: none; }
 .index { display: block; color: var(--color-text-muted); font-size: .85rem; margin-bottom: 1.5rem; }
 .cardHeader { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
-.cardTitle { font-family: var(--font-heading); font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1.15; letter-spacing: -.03em; }
-.cardTitle a { display: inline-flex; gap: .4rem; align-items: baseline; }
+.cardTitle { min-width: 0; overflow-wrap: anywhere; font-family: var(--font-heading); font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1.15; letter-spacing: -.03em; }
+.cardTitle a { display: inline-flex; min-width: 0; gap: .4rem; align-items: baseline; overflow-wrap: anywhere; }
 .externalIcon { flex-shrink: 0; }
 .signalFigure { position: relative; overflow: hidden; aspect-ratio: 2.4; margin: 1rem 0 1.4rem; border: 1px solid #34465a; border-radius: 5px; background: linear-gradient(145deg, color-mix(in srgb, var(--color-accent) 16%, var(--color-bg-elevated)), var(--color-bg-surface)); }
 .signalFigure svg { display: block; width: 100%; height: 100%; }
