@@ -4,7 +4,7 @@ The release review is still in progress. These results are local checks, not a s
 
 ## Local checks, 2026-10-29
 
-- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commits `fa9bcb3` and `703c98e`; the latest project-chart change still needs hosted validation.
+- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `c0d525f`, including the project-chart accessibility check.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
 - At a 640 CSS-pixel viewport (the layout width commonly produced by 200% zoom on a 1280px desktop), destination controls and the Contact action remained reachable in desktop and emulated-mobile browser projects. This viewport check is a proxy; actual browser zoom and visual reflow still need review.
