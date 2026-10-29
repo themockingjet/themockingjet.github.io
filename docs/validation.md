@@ -23,6 +23,8 @@ The migration met the stated lab targets in this run, while its measured layout 
 
 Three subsequent throttled production-preview loads recorded no layout-shift entries, including one with the Chromium cache disabled. The earlier shift could not be reproduced or attributed to an element, so the initial comparison remains recorded and the cause is unresolved.
 
+Five further fresh contexts on the current build used disabled cache, the same 390×844 viewport, reduced motion, 4× CPU slowdown, 150 ms latency and 1.6 Mbps throughput, with five seconds of observation. Each recorded CLS 0; median LCP was 1.796 s. This confirms the current build's lab target in repeated loads, but it still does not identify the earlier 0.0258 shift.
+
 After the WOFF2 and layout changes, a second comparison used three fresh contexts per build with the same viewport, reduced-motion, CPU and network settings, plus cache disabled. Median baseline LCP was 2.264 s with CLS 0.0008; median current LCP was 1.776 s with CLS 0. The baseline artifact was the earlier Node 24 build and the current artifact was built with Node 22.16.0. This repeat supports the lab targets but does not explain the earlier shift or replace physical-device measurements.
 
 The canvas lifecycle has an integration check for StrictMode setup, hidden-tab pause, resumption, Off mode, reduced motion and teardown. This does not prove all browser animation and gesture behavior.
