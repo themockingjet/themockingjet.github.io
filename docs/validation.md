@@ -4,7 +4,7 @@ The release review is still in progress. Hosted CI passed on the current branch 
 
 ## Local checks, 2026-10-29
 
-- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for current commit `c7ef16f`, including the responsive layout regression checks.
+- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `b49f16e`, including the responsive layout regression checks.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
 - A genuine 200% Chromium browser-zoom review used the browser zoom API (not viewport emulation): Chromium reported zoom 2, `innerWidth` 640, `innerHeight` 450 and `devicePixelRatio` 2. All six destinations were checked for panel/document horizontal overflow and itinerary bounds. The review found an About decorative glow overflow, fixed by constraining it to its section. The expanded responsive Playwright check also exposed a long project title overflowing its narrow card on Linux; the title now wraps. Captures: [home](screenshots/zoom200-home.png), [route](screenshots/zoom200-route.png), [projects](screenshots/zoom200-projects.png), [lab](screenshots/zoom200-lab.png), [about](screenshots/zoom200-about.png), [contact](screenshots/zoom200-contact.png).
@@ -33,11 +33,11 @@ Additional Chromium checks exercised keyboard navigation and form arrow keys, ve
 
 All six production destinations were opened at 390×844 and 1440×900 CSS pixels and compared with the approved prototype previews. No browser errors or horizontal document overflow appeared at the emulated mobile width. The first project now includes the prototype's explicitly illustrative, non-live signal chart.
 
-At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary. This is not a complete focus audit.
+At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary.
+
+A Chromium keyboard Tab traversal at 320×800 and 640×450 CSS pixels reached 44 and 45 focus stops, respectively. Each content control showed `:focus-visible` and remained inside the viewport between the fixed header and destination navigation. The fixed header and itinerary controls themselves were also reached in the sequence.
 
 ## Outstanding release evidence
 
 - Physical-phone testing is unavailable in the current environment; the user confirmed they do not have a phone for this review. Emulated mobile results do not satisfy this requirement.
-- Investigate the increased lab CLS and measure on representative hardware.
-- Complete a comprehensive keyboard-focus review, beyond the existing interaction checks and focused-project visibility check.
-- Investigate the early CLS outlier. Current repeated lab runs are within the 0.1 target, but the initial 0.0258 shift has not been attributed.
+- The early CLS outlier remains unexplained. Repeated current-build lab runs recorded CLS 0, so the ≤0.1 target is met; attribute the earlier 0.0258 result if it can be reproduced.
