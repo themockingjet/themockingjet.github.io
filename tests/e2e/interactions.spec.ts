@@ -1,6 +1,30 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
+for (const reading of [false, true]) test(`guided route and briefing work with motion off${reading ? ' in Reading view' : ''}`, async ({ page }) => {
+  await page.goto('/#route')
+  await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
+  if (reading) await page.getByRole('button', { name: 'Reading view' }).click()
+  const preview = page.getByRole('heading', { name: /Your suggested route/ }).locator('..')
+  await expect(preview).toContainText('Streaming market events feed backend rules')
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download briefing' }).click()
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toBe('jet-mission-brief.md')
+  const stream = await download.createReadStream()
+  let text = ''
+  for await (const chunk of stream) text += chunk.toString()
+  expect(text).toContain('Why it matches: Streaming market events')
+  await page.getByRole('button', { name: 'Start guided route' }).click()
+  await expect(page).toHaveURL(/#project-binance-trading-bot$/)
+  const guided = page.getByRole('region', { name: 'Guided route' })
+  await expect(guided).toBeVisible()
+  await guided.getByRole('button', { name: 'Next project' }).click()
+  await expect(page).toHaveURL(/#project-discord-marketplace$/)
+  await guided.getByRole('button', { name: 'Exit route' }).click()
+  await expect(guided).toBeHidden()
+})
+
 test('lab scenarios complete, cancel and reset in reading view with motion off', async ({ page }) => {
   await page.goto('/#lab')
   await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
