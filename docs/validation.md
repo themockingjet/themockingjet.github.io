@@ -4,7 +4,7 @@ The release review is still in progress. Hosted CI passed on the current branch 
 
 ## Local checks, 2026-10-29
 
-- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `b49f16e`, including the responsive layout regression checks.
+- Node 22.16.0: lint, production build, 69 Vitest tests, and 61 Playwright desktop/emulated-mobile tests passed; one desktop touch-only case was intentionally skipped. A clean `npm ci` and the same checks also passed in an isolated copy. Hosted Node 22 validation passed for commit `611fcef`, including the responsive layout regression checks.
 - Production preview: `/raw/portfolio.md` returned 200 and matched `src/content/portfolio.md` byte for byte. Legacy fragments `#hero`, `#about`, `#projects` and `#skills` selected the corresponding journey destination.
 - `dist/.experimental` was absent.
 - A genuine 200% Chromium browser-zoom review used the browser zoom API (not viewport emulation): Chromium reported zoom 2, `innerWidth` 640, `innerHeight` 450 and `devicePixelRatio` 2. All six destinations were checked for panel/document horizontal overflow and itinerary bounds. The review found an About decorative glow overflow, fixed by constraining it to its section. The expanded responsive Playwright check also exposed a long project title overflowing its narrow card on Linux; the title now wraps. Captures: [home](screenshots/zoom200-home.png), [route](screenshots/zoom200-route.png), [projects](screenshots/zoom200-projects.png), [lab](screenshots/zoom200-lab.png), [about](screenshots/zoom200-about.png), [contact](screenshots/zoom200-contact.png).
@@ -27,6 +27,8 @@ Five further fresh contexts on the current build used disabled cache, the same 3
 
 After the WOFF2 and layout changes, a second comparison used three fresh contexts per build with the same viewport, reduced-motion, CPU and network settings, plus cache disabled. Median baseline LCP was 2.264 s with CLS 0.0008; median current LCP was 1.776 s with CLS 0. The baseline artifact was the earlier Node 24 build and the current artifact was built with Node 22.16.0. This repeat supports the lab targets but does not explain the earlier shift or replace physical-device measurements.
 
+Across eleven subsequent current-build contexts in these repeat runs, observed CLS was 0. The initial 0.0258 outlier remains unattributed, but it is below the 0.1 target; the repeated current-build results meet that target.
+
 The canvas lifecycle has an integration check for StrictMode setup, hidden-tab pause, resumption, Off mode, reduced motion and teardown. This does not prove all browser animation and gesture behavior.
 
 Additional Chromium checks exercised keyboard navigation and form arrow keys, vertical overflow before wheel travel, horizontal wheel input, unprevented control-wheel zoom gestures, and an emulated sideways touch gesture. Physical touch hardware remains untested.
@@ -40,4 +42,3 @@ A Chromium keyboard Tab traversal at 320×800 and 640×450 CSS pixels reached 44
 ## Outstanding release evidence
 
 - Physical-phone testing is unavailable in the current environment; the user confirmed they do not have a phone for this review. Emulated mobile results do not satisfy this requirement.
-- The early CLS outlier remains unexplained. Repeated current-build lab runs recorded CLS 0, so the ≤0.1 target is met; attribute the earlier 0.0258 result if it can be reproduced.
