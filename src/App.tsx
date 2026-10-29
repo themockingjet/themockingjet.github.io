@@ -1,52 +1,40 @@
-import { motion } from 'motion/react'
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import Nav from './components/Nav/Nav'
 import Hero from './components/Hero/Hero'
 import Footer from './components/Footer/Footer'
+import MissionPlanner from './components/MissionPlanner/MissionPlanner'
+import AutomationLab from './components/AutomationLab/AutomationLab'
+import Journey from './components/Journey/Journey'
+import About from './components/About/About'
+import Projects from './components/Projects/Projects'
+import Skills from './components/Skills/Skills'
+import SpaceBackground from './components/SpaceBackground/SpaceBackground'
 import { parsePortfolio } from './lib/parsePortfolio'
 import rawPortfolio from './content/portfolio.md?raw'
-
-const About = lazy(() => import('./components/About/About'))
-const Projects = lazy(() => import('./components/Projects/Projects'))
-const Skills = lazy(() => import('./components/Skills/Skills'))
+import { THEMES, type ThemeId } from './lib/themes'
 
 const portfolio = parsePortfolio(rawPortfolio)
 
-export const THEMES = [
-  { id: 'amber',  label: 'Amber',  accent: '#f59e0b' },
-  { id: 'sage',   label: 'Sage',   accent: '#5e8a70' },
-  { id: 'ocean',  label: 'Ocean',  accent: '#4a9eff' },
-  { id: 'ember',  label: 'Ember',  accent: '#e07840' },
-  { id: 'violet', label: 'Violet', accent: '#8b67e8' },
-  { id: 'slate',  label: 'Slate',  accent: '#5b8fa8' },
-] as const
-
-export type ThemeId = (typeof THEMES)[number]['id']
-
-const REVEAL = {
-  initial: { opacity: 0, y: 36 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-}
-
 export default function App() {
-  const [dark, setDark] = useState(true)
-  const [theme, setTheme] = useState<ThemeId>('amber')
+  const [dark, setDark] = useState(() => { try { return localStorage.getItem('portfolio-mode') !== 'light' } catch { return true } })
+  const [theme, setTheme] = useState<ThemeId>(() => { try { const stored = localStorage.getItem('portfolio-theme'); return THEMES.find((item) => item.id === stored)?.id ?? 'amber' } catch { return 'amber' } })
   const toggleDark = () => setDark((d) => !d)
 
   useEffect(() => {
     if (dark) document.documentElement.removeAttribute('data-mode')
     else document.documentElement.setAttribute('data-mode', 'light')
+    try { localStorage.setItem('portfolio-mode', dark ? 'dark' : 'light') } catch { /* preferences are optional */ }
   }, [dark])
 
   useEffect(() => {
     if (theme === 'amber') document.documentElement.removeAttribute('data-theme')
     else document.documentElement.setAttribute('data-theme', theme)
+    try { localStorage.setItem('portfolio-theme', theme) } catch { /* preferences are optional */ }
   }, [theme])
 
   return (
     <>
+      <SpaceBackground />
       <Nav
         name={portfolio.hero.name}
         dark={dark}
@@ -55,27 +43,14 @@ export default function App() {
         onThemeChange={setTheme}
       />
 
-      <main>
-        <div id="hero">
-          <Hero data={portfolio.hero} />
-        </div>
-
-        <Suspense fallback={null}>
-          <motion.div id="about" {...REVEAL}>
-            <About data={portfolio.about} />
-          </motion.div>
-        
-          <motion.div id="projects" {...REVEAL}>
-            <Projects projects={portfolio.projects} />
-          </motion.div>
-        
-          <motion.div id="skills" {...REVEAL}>
-            <Skills skills={portfolio.skills} />
-          </motion.div>
-        </Suspense>
-      </main>
-      
-      <Footer />
+      <Journey>
+        <Hero data={portfolio.hero} />
+        <MissionPlanner projects={portfolio.projects} profileUrl={portfolio.hero.github} />
+        <Projects projects={portfolio.projects} />
+        <AutomationLab />
+        <><About data={portfolio.about} /><div id="skills"><Skills skills={portfolio.skills} /></div></>
+        <section className="contact" aria-labelledby="contact-heading"><div className="contact-inner"><p className="contact-label">The next possibility</p><h2 id="contact-heading">{portfolio.hero.contactHeadline}</h2><div className="contact-action"><p>Find Jet on GitHub.</p><a href={portfolio.hero.github}>Visit GitHub profile ↗</a></div><Footer /></div></section>
+      </Journey>
     </>
   )
 }

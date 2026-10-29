@@ -29,8 +29,7 @@
   .footer {
     margin-left: 0;
     padding: var(--space-5);
-    padding-bottom: 72px;
-    /* clear bottom nav */
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 
   .stack {

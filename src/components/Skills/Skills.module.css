@@ -9,7 +9,7 @@
 .skills::after {
   content: '';
   position: absolute;
-  right: -8vw;
+  right: 0;
   bottom: -10vw;
   width: 50vw;
   height: 50vw;

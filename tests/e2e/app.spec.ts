@@ -61,3 +61,8 @@ test.describe('Critical user flows', () => {
     await expect(detailBtn).toBeVisible()
   })
 })
+
+test('featured project includes an accessible illustrative signal chart', async ({ page }) => {
+  await page.goto('/#projects')
+  await expect(page.getByRole('img', { name: /Illustrative event signal.*not live market data/i })).toBeVisible()
+})
