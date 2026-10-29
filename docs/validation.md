@@ -35,7 +35,7 @@ All six production destinations were opened at 390×844 and 1440×900 CSS pixels
 
 At 320×700 CSS pixels, a visual inspection confirmed that the hero controls and itinerary appear in the initial viewport; the lens continues below it in the scrollable destination. A targeted desktop and emulated-mobile check also verified that the focused first project disclosure is above the fixed itinerary.
 
-A Chromium keyboard Tab traversal at 320×800 and 640×450 CSS pixels reached 44 and 45 focus stops, respectively. Each content control showed `:focus-visible` and remained inside the viewport between the fixed header and destination navigation. The fixed header and itinerary controls themselves were also reached in the sequence.
+A Chromium keyboard Tab traversal at 320×800 and 640×450 CSS pixels reached 44 and 45 focus stops, respectively. Each content control showed `:focus-visible` and remained inside the viewport between the fixed header and destination navigation. The fixed header and itinerary controls themselves were also reached in the sequence. At 320px the previous/next arrows are hidden because they clipped slightly at that width; all six direct destination links remain available, and a layout test checks the arrow bounds at widths where they are shown.
 
 ## Outstanding release evidence
 

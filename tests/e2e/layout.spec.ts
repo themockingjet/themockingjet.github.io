@@ -7,6 +7,14 @@ for (const width of [320, 375, 640, 768, 1440, 1920]) {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Journey destinations' })
     await expect(nav).toBeVisible()
+    if (width <= 360) {
+      await expect(nav.getByRole('button', { name: 'Previous destination' })).toBeHidden()
+      await expect(nav.getByRole('button', { name: 'Next destination' })).toBeHidden()
+    } else for (const label of ['Previous destination', 'Next destination']) {
+      const button = nav.getByRole('button', { name: label })
+      const box = await button.boundingBox()
+      expect(box && box.x >= 0 && box.x + box.width <= width).toBeTruthy()
+    }
     const destinations = [['Home', 'hero'], ['Your route', 'route'], ['Projects', 'projects'], ['The lab', 'lab'], ['About', 'about'], ['Contact', 'contact']] as const
     for (const [label, id] of destinations) {
       const link = nav.getByRole('link', { name: label })

@@ -20,3 +20,4 @@
 @media (max-width: 700px) { .reading { top: 55px; left: .5rem; right: auto; font-size: .75rem; } }
 @media (max-width: 1100px) { .position { display: none; } }
 @media (max-width: 600px) { .itinerary { gap: 0; } .itinerary a { flex: 1; font-size: .6rem; } .itinerary button { min-width: 32px; } }
+@media (max-width: 360px) { .itinerary button { display: none; } }
