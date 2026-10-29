@@ -35,7 +35,10 @@ export default function App() {
     try { localStorage.setItem('portfolio-theme', theme) } catch { /* preferences are optional */ }
   }, [theme])
 
-  useEffect(() => { try { localStorage.setItem('journey-motion', motion) } catch { /* preferences are optional */ } }, [motion])
+  useEffect(() => {
+    document.documentElement.dataset.motion = motion
+    try { localStorage.setItem('journey-motion', motion) } catch { /* preferences are optional */ }
+  }, [motion])
 
   return (
     <>

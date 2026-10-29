@@ -40,3 +40,13 @@ test('light theme maintains WCAG A and AA checks across destinations', async ({ 
     expect(result.violations, `axe in light mode at ${label}`).toEqual([])
   }
 })
+
+test('motion off and system reduced motion suppress decorative transitions', async ({ page }) => {
+  await page.goto('/#skills')
+  const chip = page.locator('#skills li').first()
+  await page.getByRole('combobox', { name: 'Motion' }).selectOption('off')
+  await expect(chip).toHaveCSS('transition-duration', '0s')
+  await page.getByRole('combobox', { name: 'Motion' }).selectOption('full')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(chip).toHaveCSS('transition-duration', '0s')
+})
