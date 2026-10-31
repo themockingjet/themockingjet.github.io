@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import Nav from './components/Nav/Nav'
 import Hero from './components/Hero/Hero'
 import Footer from './components/Footer/Footer'
-import MissionPlanner from './components/MissionPlanner/MissionPlanner'
 import AutomationLab from './components/AutomationLab/AutomationLab'
 import Journey from './components/Journey/Journey'
 import About from './components/About/About'
@@ -45,7 +44,6 @@ export default function App() {
 
       <Journey>
         <Hero data={portfolio.hero} />
-        <MissionPlanner projects={portfolio.projects} profileUrl={portfolio.hero.github} />
         <Projects projects={portfolio.projects} />
         <AutomationLab />
         <><About data={portfolio.about} /><div id="skills"><Skills skills={portfolio.skills} /></div></>

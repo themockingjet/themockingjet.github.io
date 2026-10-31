@@ -1,0 +1,46 @@
+.constellation { display: block; overflow: visible; }
+.faint line { stroke: var(--color-text-faint); stroke-width: .6; stroke-dasharray: 1.5 6; opacity: .4; }
+.star { fill: var(--color-text-faint); opacity: .65; }
+.star:nth-of-type(3n) { animation: twinkle 3.2s ease-in-out infinite alternate; }
+.star:nth-of-type(4n) { animation-delay: -1.6s; }
+@keyframes twinkle { to { opacity: .15; } }
+
+.edges path { fill: none; stroke: var(--color-text-muted); stroke-width: 1; opacity: .32; }
+.edges .rejectEdge { stroke-dasharray: 3 5; opacity: .28; }
+.edges .recoveryEdge, .edges .orbit { stroke: var(--color-text); stroke-dasharray: 2 4; opacity: .38; }
+
+.flowPulse, .recoveryPulse, .mutedPulse { fill: none; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .14 1.2; stroke-dashoffset: .14; opacity: 0; }
+.flowPulse { stroke: var(--color-accent); }
+.recoveryPulse { stroke: var(--color-text); }
+.mutedPulse { stroke: var(--color-text-muted); }
+
+.ring { fill: var(--color-bg); stroke: var(--color-text-muted); stroke-width: 1; stroke-opacity: .5; }
+.core { fill: var(--color-text); }
+.rejected .ring { stroke-dasharray: 2 3; }
+.rejected .core { fill: var(--color-text-faint); }
+.guard { fill: none; stroke: var(--color-text); stroke-width: 1; stroke-dasharray: 2 3.5; opacity: .45; }
+.flowGlow, .recoveryGlow, .mutedGlow { opacity: 0; transform-box: fill-box; transform-origin: center; pointer-events: none; }
+.flowGlow { fill: var(--color-accent); }
+.recoveryGlow { fill: var(--color-text); }
+.mutedGlow { fill: var(--color-text-muted); }
+
+.label { fill: var(--color-text-muted); font: 500 14px var(--font-heading); letter-spacing: .01em; }
+.rejected .label, .note { fill: var(--color-text-faint); }
+.note { font: italic 400 13px var(--font-sans); }
+
+:global([data-mode="light"]) .halo { display: none; }
+:global([data-mode="light"]) .edges path { opacity: .45; }
+
+/* On phones the graph renders at about half scale, so nodes and strokes are drawn heavier to stay legible. */
+@media (max-width: 700px), (orientation: landscape) and (max-height: 500px) {
+  .label, .note { display: none; }
+  .ring { r: 13px; stroke-width: 1.6; }
+  .core { r: 5px; }
+  .guard { r: 19px; stroke-width: 1.4; }
+  .edges path { stroke-width: 1.6; }
+  .flowPulse, .recoveryPulse, .mutedPulse { stroke-width: 5; }
+  .flowGlow, .recoveryGlow, .mutedGlow { r: 8px; }
+  .faint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .star { animation: none; } }
