@@ -1,12 +1,23 @@
-.hero { position: relative; min-height: calc(100dvh - 134px); display: flex; align-items: center; padding: clamp(2rem, 6vw, 6rem); overflow: hidden; }
-.content { position: relative; z-index: 1; width: min(50%, 36rem); }
+.hero { position: relative; min-height: calc(100dvh - 134px); max-width: var(--frame-max); margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) var(--frame-pad); display: grid; grid-template-columns: minmax(0, 32rem) minmax(0, 1fr); align-items: center; gap: clamp(1.5rem, 4vw, 4rem); overflow: hidden; }
+.content { position: relative; z-index: 1; }
 .label { color: var(--color-accent); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 1.5rem; }
-.content h1 { font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.03; letter-spacing: -.05em; }
+.content h1 { font-family: var(--font-heading); font-size: clamp(3rem, 5.6vw, 5.25rem); line-height: 1.03; letter-spacing: -.05em; }
 .title { margin-top: 1.5rem; font-size: clamp(1.1rem, 2vw, 1.5rem); }
 .tagline { color: var(--color-text-muted); max-width: 34ch; margin: 1rem 0 2rem; font-size: 1.15rem; }
-.actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-.actions a { display: inline-block; padding: .8rem 1.2rem; color: var(--color-text); }
-.actions a:first-child { background: #e9c18b; color: #17130e; border-radius: 3px; font-weight: 700; }
-.profile { display: inline-block; margin-top: 1.5rem; color: var(--color-text-muted); text-decoration: underline; }
-.lens { position: absolute; width: min(65vw, 850px); right: -3%; top: 50%; transform: translateY(-50%); pointer-events: none; }
-@media (max-width: 700px) { .hero { height: 100%; min-height: 0; align-items: flex-start; padding: 3rem 1.5rem 1.5rem; } .content { width: 100%; } .lens { width: 112%; right: -19%; top: 39%; transform: none; } }
+.profile { display: inline-block; color: var(--color-text-muted); text-decoration: underline; }
+.lens { width: 100%; max-width: 760px; justify-self: center; pointer-events: none; }
+/* Portrait screens below desktop stack the hero into exactly one screen: the copy takes what it needs and the graph scales into the rest. */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .hero { display: flex; flex-direction: column; height: 100%; min-height: 0; gap: clamp(1rem, 4vh, 2.5rem); }
+  .content { max-width: 36rem; }
+  .lens { flex: 1 1 0; width: 100%; min-height: 200px; max-width: none; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  .hero { padding: clamp(1.5rem, 5vh, 2.5rem) 1.25rem calc(88px + env(safe-area-inset-bottom)); }
+  .label { margin-bottom: 1rem; }
+  .title { margin-top: 1rem; }
+  .tagline { margin: .75rem 0 1.25rem; }
+  .lens { width: calc(100% + 2.5rem); margin-inline: -1.25rem; min-height: 160px; }
+}
+@media (max-width: 380px) { .content h1 { font-size: 2.5rem; } .label { font-size: .7rem; letter-spacing: .12em; } }
+@media (max-width: 1023px) and (orientation: portrait) and (max-height: 560px) { .hero { height: auto; } .lens { flex: none; height: 240px; } }

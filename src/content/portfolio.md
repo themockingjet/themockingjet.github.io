@@ -58,7 +58,7 @@ This site. Built from scratch with Markdown-driven content, CSS Modules, and an 
 Most developer portfolios look the same — template-driven, static pages that say nothing about how the person thinks. Needed something that felt like a system, not a brochure.
 
 [What It Does]
-Renders portfolio content from Markdown. A six-destination journey offers direct links and a local route planner.
+Renders portfolio content from Markdown. A five-destination journey offers direct links between sections.
 
 [Key Decisions]
 Stayed on React + Vite for simplicity — no SSR needed for a static portfolio. CSS Modules provide scoped styling; canvas and GSAP render the animated star field and travel streaks.
