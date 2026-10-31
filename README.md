@@ -91,9 +91,9 @@ tests/
 
 ## Deployment
 
-The **CI** workflow runs lint, unit tests, build and end-to-end tests on every pull request and on pushes to `main` and `dev`; pull requests also get Lighthouse scores in the job summary. Pushes to `main` deploy to GitHub Pages only after those checks pass.
+The **CI** workflow runs on every pull request and on pushes to `main` and `dev`. Lint, unit tests and build run in one job while the end-to-end tests run against the production build, with desktop and mobile in parallel; pull requests also get Lighthouse scores in the job summary. A final `checks` job gates merges, and pushes to `main` deploy to GitHub Pages only after it passes.
 
-Dependabot opens grouped weekly updates for npm packages and GitHub Actions, and a weekly **Link check** workflow opens an issue if any links break.
+Dependabot opens grouped weekly updates for npm packages and GitHub Actions against `dev`, and a weekly **Link check** workflow opens an issue if any links break.
 
 To roll back, revert the offending commit on `main`; the Pages workflow redeploys automatically.
 

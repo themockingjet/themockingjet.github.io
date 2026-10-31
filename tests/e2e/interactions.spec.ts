@@ -20,6 +20,7 @@ test('lab scenarios complete, cancel and reset', async ({ page }) => {
 })
 
 test('key destination states have no WCAG A or AA violations', async ({ page }) => {
+  test.slow() // one full axe scan per destination
   await page.goto('/')
   for (const id of ['projects', 'lab', 'about', 'contact']) {
     await page.getByRole('navigation', { name: 'Journey destinations' }).getByRole('link', { name: { projects: 'Projects', lab: 'The lab', about: 'About', contact: 'Contact' }[id] }).click()
@@ -31,6 +32,7 @@ test('key destination states have no WCAG A or AA violations', async ({ page }) 
 })
 
 test('light theme maintains WCAG A and AA checks across destinations', async ({ page }) => {
+  test.slow() // one full axe scan per destination
   await page.goto('/')
   await page.getByRole('button', { name: 'Switch to light mode' }).click()
   for (const label of ['Home', 'Projects', 'The lab', 'About', 'Contact']) {
@@ -42,6 +44,7 @@ test('light theme maintains WCAG A and AA checks across destinations', async ({ 
 })
 
 test('accent choices preserve contrast in light mode', async ({ page }) => {
+  test.slow() // one full axe scan per destination
   await page.goto('/#lab')
   await page.getByRole('button', { name: 'Switch to light mode' }).click()
   for (const theme of ['Amber', 'Sage', 'Ocean', 'Ember', 'Violet', 'Slate']) {
