@@ -1,13 +1,11 @@
-.about { min-height: calc(100dvh - 134px); display: flex; align-items: center; padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5.5vw, 5rem); }
-.inner { width: 100%; max-width: 1440px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 10vw, 10rem); align-items: start; }
-.heading { color: #9bdde0; font-size: .9rem; font-weight: 400; margin-bottom: 1.2rem; }
-.intro > p { font-family: var(--font-heading); font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.04em; max-width: 11ch; }
-.personaIndicator { color: var(--color-text-muted); margin-bottom: 1.5rem; }
-.personaIndicator select { color: var(--color-text); background: var(--color-bg-elevated); border: 1px solid #526477; padding: .5rem; font: inherit; max-width: 100%; }
+.about { max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; display: flex; align-items: center; padding: clamp(2rem, 5vw, 4rem) var(--frame-pad); }
+.inner { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 10vw, 10rem); align-items: start; }
+.heading { font-family: var(--font-heading); font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.04em; max-width: 11ch; }
+.persona { display: flex; align-items: center; gap: .75rem; color: var(--color-text-muted); margin-bottom: 1.75rem; }
+.persona select { color: var(--color-text); background: var(--color-bg-elevated); border: 1px solid #526477; padding: .5rem; font: inherit; max-width: 100%; }
 .slot + .slot { margin-top: 1.5rem; }
-.intent { display: block; color: var(--color-text-muted); font-size: .8rem; margin-bottom: .4rem; }
+.intent { color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); margin-bottom: .4rem; }
 .paragraph { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.65; }
 .lead { color: var(--color-text); font-family: var(--font-heading); font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.45; }
 .word { color: inherit; }
-:global([data-mode="light"]) .heading { color: #24626a; }
-@media (max-width: 700px) { .about { align-items: start; padding-top: 5rem; } .inner { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 700px) { .about { align-items: start; padding-top: 2rem; } .inner { grid-template-columns: 1fr; gap: 2rem; } }

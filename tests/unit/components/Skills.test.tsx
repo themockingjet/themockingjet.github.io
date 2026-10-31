@@ -23,7 +23,7 @@ describe('Skills component', () => {
 
     it('should render group labels as h3 headings', () => {
       expect(screen.getByRole('heading', { level: 3, name: 'Stack' })).toBeInTheDocument()
-      expect(screen.getByRole('heading', { level: 3, name: 'Tools & Platforms' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Tools and platforms' })).toBeInTheDocument()
     })
 
     it('should render skills as list items in two groups', () => {

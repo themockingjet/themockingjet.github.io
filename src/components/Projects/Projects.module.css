@@ -1,32 +1,75 @@
-.projects { min-height: calc(100dvh - 134px); padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5.5vw, 5rem); }
-.inner { max-width: 1440px; margin: auto; }
-.heading { font-family: var(--font-heading); font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.04em; margin-bottom: 2.5rem; }
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; align-items: start; }
-.card { border-top: 1px solid #34465a; padding: 1.5rem 0; min-width: 0; }
-.featuredCard { border-top-color: var(--color-accent); }
-.cornerBL, .cornerBR { display: none; }
-.index { display: block; color: var(--color-text-muted); font-size: .85rem; margin-bottom: 1.5rem; }
-.cardHeader { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
-.cardTitle { min-width: 0; overflow-wrap: anywhere; font-family: var(--font-heading); font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1.15; letter-spacing: -.03em; }
-.cardTitle a { display: inline-flex; min-width: 0; gap: .4rem; align-items: baseline; overflow-wrap: anywhere; }
-.externalIcon { flex-shrink: 0; }
-.signalFigure { position: relative; overflow: hidden; aspect-ratio: 2.4; margin: 1rem 0 1.4rem; border: 1px solid #34465a; border-radius: 5px; background: linear-gradient(145deg, color-mix(in srgb, var(--color-accent) 16%, var(--color-bg-elevated)), var(--color-bg-surface)); }
-.signalFigure svg { display: block; width: 100%; height: 100%; }
-.signalLabel, .signalCaption { fill: var(--color-text-muted); font-family: var(--font-body); font-size: 26px; }
-.signalCaption { font-size: 18px; }
-.signalFill { fill: color-mix(in srgb, var(--color-accent) 14%, transparent); }
-.signalLine { fill: none; stroke: var(--color-accent); stroke-width: 2.5; vector-effect: non-scaling-stroke; }
-.statusBadge { color: var(--color-text-muted); border: 1px solid #526477; border-radius: 2rem; padding: .2rem .55rem; font-size: .75rem; text-transform: capitalize; }
-.description { color: var(--color-text-muted); line-height: 1.6; margin: 1.2rem 0; }
-.stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
-.tag { display: flex; align-items: center; gap: .3rem; border: 1px solid #34465a; border-radius: 2px; padding: .3rem .55rem; color: var(--color-text-muted); font-size: .8rem; }
-.expandBtn { min-height: 44px; margin-top: 1rem; padding: .5rem 0; color: var(--color-text); background: transparent; border: 0; text-decoration: underline; text-underline-offset: .2em; font: inherit; font-weight: 600; }
-.details { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 1rem; }
-.details[hidden] { display: none; }
-.detailBlock + .detailBlock { margin-top: 1rem; }
-.detailHeading { color: var(--color-accent); font-size: .9rem; }
-.detailBody { color: var(--color-text-muted); margin-top: .3rem; line-height: 1.6; }
-.archiveDivider { margin: 3rem 0 1.5rem; color: var(--color-text-muted); border-bottom: 1px solid var(--color-border); padding-bottom: .7rem; }
-.archivedList { margin-top: 1rem; }
-@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) { .projects { padding-top: 5rem; } .grid { grid-template-columns: 1fr; gap: 1rem; } }
+.projects { max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; padding: clamp(2rem, 9vh, 5.5rem) var(--frame-pad) 2rem; }
+.heading { font-family: var(--font-heading); font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.04em; margin-bottom: clamp(1.25rem, 4vh, 2.5rem); }
+.layout { display: grid; grid-template-columns: minmax(15rem, 21rem) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+
+/* The index is a vertical route: one station per project, joined by the same dotted line as the footer. */
+.index ul { position: relative; }
+.index ul::before { content: ''; position: absolute; top: 1.4rem; bottom: 1.4rem; left: 6.25px; width: 1.5px; background: repeating-linear-gradient(180deg, var(--color-text-faint) 0 2px, transparent 2px 6px); opacity: .7; }
+.group { margin: 1.75rem 0 .35rem 1.9rem; color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); }
+.pick { position: relative; display: flex; align-items: center; gap: 1rem; width: 100%; min-height: 2.8rem; padding: .3rem 0; border: 0; background: none; color: var(--color-text-muted); font: 500 1.05rem/1.25 var(--font-heading); letter-spacing: -.01em; text-align: left; cursor: pointer; transition: color .2s; }
+.pick:hover, .pick[aria-expanded="true"] { color: var(--color-text); }
+.station { position: relative; flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--color-bg); border: 1px solid color-mix(in srgb, var(--color-text-muted) 55%, transparent); transition: border-color .2s, box-shadow .3s; }
+.station::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--color-text-faint); }
+.pick:hover .station::after { background: var(--color-text); }
+.pick[aria-expanded="true"] .station { border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-accent-dim); }
+.pick[aria-expanded="true"] .station::after { background: var(--color-accent); }
+.group + ul .pick:not([aria-expanded="true"]) { color: var(--color-text-faint); }
+.group + ul .pick:not([aria-expanded="true"]):hover { color: var(--color-text-muted); }
+
+.run { min-width: 0; max-width: 52rem; padding-top: .5rem; }
+.runHeader { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; }
+.runHeader h3 { min-width: 0; overflow-wrap: anywhere; font-family: var(--font-heading); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -.035em; }
+.status { color: var(--color-text-faint); font-size: .9rem; }
+.summary { max-width: 62ch; margin-top: .9rem; color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.6; }
+
+/* The flow fills in once, station by station, whenever a project is chosen. */
+.flow { --hop: .32s; display: grid; grid-template-columns: repeat(var(--steps), minmax(0, 1fr)); margin: clamp(1.5rem, 4vh, 2.25rem) 0; }
+.flow li { position: relative; display: flex; flex-direction: column; gap: .75rem; padding-right: 1rem; color: var(--color-text-muted); font: 500 .85rem/1.3 var(--font-heading); }
+.flow li:not(:last-child)::before, .flow li:not(:last-child)::after { content: ''; position: absolute; top: 6.25px; left: 20px; right: 6px; height: 1.5px; }
+.flow li::before { background: repeating-linear-gradient(90deg, var(--color-text-faint) 0 2px, transparent 2px 6px); opacity: .7; }
+.flow li::after { background: var(--color-accent); transform-origin: left; animation: travel var(--hop) linear calc(var(--i) * var(--hop) + var(--hop) * .5) both; }
+.node { position: relative; width: 14px; height: 14px; border-radius: 50%; background: var(--color-bg); border: 1px solid var(--color-accent); animation: lit .3s ease-out calc(var(--i) * var(--hop)) both; }
+.node::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--color-text); }
+.flow li:last-child .node::after { background: var(--color-accent); }
+.flow li:last-child .node { box-shadow: 0 0 0 4px var(--color-accent-dim); }
+@keyframes travel { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes lit { 0% { border-color: color-mix(in srgb, var(--color-text-muted) 55%, transparent); box-shadow: 0 0 0 0 var(--color-accent-glow); } 60% { box-shadow: 0 0 0 7px var(--color-accent-glow); } }
+
+.facts { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1.25rem clamp(1.5rem, 4vw, 3.5rem); }
+.facts h4, .background h4 { margin-bottom: .35rem; color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); }
+.facts p { max-width: 60ch; color: var(--color-text-muted); line-height: 1.55; }
+.facts .impact { color: var(--color-text); font-family: var(--font-heading); font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.45; letter-spacing: -.01em; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 2rem; margin-top: 1.25rem; }
+.more, .source { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--color-text); font: 600 .95rem/1.2 var(--font-sans); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--color-text) 35%, transparent); text-underline-offset: .25em; cursor: pointer; }
+.more:hover, .source:hover { text-decoration-color: var(--color-accent); }
+.background { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.25rem 2.5rem; margin-top: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border); }
+.background[hidden] { display: none; }
+.background p { max-width: 60ch; color: var(--color-text-muted); line-height: 1.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flow li::after, .node { animation: none; }
+}
+
+/* Below 900px the index becomes an accordion: the chosen project opens under its own station. */
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .index ul::before { display: none; }
+  .stop + .stop { border-top: 1px solid var(--color-border); }
+  .index ul:last-child { border-bottom: 1px solid var(--color-border); }
+  .group { margin: 2rem 0 .5rem; }
+  .pick { min-height: 3.5rem; font-size: 1.1rem; }
+  .run { padding: .25rem 0 1.75rem 30px; }
+  .runHeader h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .facts { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .projects { padding-top: 2rem; }
+  .run { padding-left: 0; }
+  .flow { grid-template-columns: none; grid-auto-rows: auto; gap: 1.1rem; }
+  .flow li { flex-direction: row; align-items: center; gap: 1rem; padding: 0; }
+  .flow li:not(:last-child)::before, .flow li:not(:last-child)::after { top: 20px; bottom: calc(-1.1rem + 6px); left: 6.25px; right: auto; width: 1.5px; height: auto; }
+  .flow li::before { background: repeating-linear-gradient(180deg, var(--color-text-faint) 0 2px, transparent 2px 6px); }
+  .flow li::after { transform-origin: top; animation-name: travel-down; }
+}
+@keyframes travel-down { from { transform: scaleY(0); } to { transform: scaleY(1); } }

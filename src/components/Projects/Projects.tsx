@@ -1,37 +1,90 @@
-import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import styles from './Projects.module.css'
 import type { ProjectData } from '../../lib/parsePortfolio'
-import { resolveIcon } from '../../lib/icons'
 
-function ProjectCard({ project, index, featured }: { project: ProjectData; index: number; featured?: boolean }) {
-  const [expanded, setExpanded] = useState(false)
-  const hasLink = !!project.url && project.url !== '#'
-  const detailsId = `details-${project.id}`
-  const cardClass = [styles.card, featured ? styles.featuredCard : '', expanded ? styles.cardExpanded : ''].filter(Boolean).join(' ')
-  return <li id={`project-${project.id}`} className={cardClass}>
-    <span className={styles.cornerBL} aria-hidden/><span className={styles.cornerBR} aria-hidden/><span className={styles.index}>{String(index).padStart(2, '0')}</span>
-    <div className={styles.cardHeader}><h3 className={styles.cardTitle}>{hasLink ? <a href={project.url} target="_blank" rel="noopener noreferrer">{project.title}<Icon icon="lucide:arrow-up-right" width={14} height={14} className={styles.externalIcon} aria-hidden/></a> : project.title}</h3>{project.status && <span className={styles.statusBadge}> {project.status}</span>}</div>
-    {featured && <figure className={styles.signalFigure}>
-      <svg viewBox="0 0 800 250" role="img" aria-labelledby="signal-title signal-caption" preserveAspectRatio="none">
-        <title id="signal-title">Illustrative event signal</title>
-        <text x="28" y="36" className={styles.signalLabel}>Signal → decision → action</text>
-        <path d="M0 198 L55 188 L94 210 L144 144 L192 166 L245 82 L284 112 L337 74 L372 128 L414 70 L462 91 L520 26 L566 54 L622 0 L676 38 L721 8 L800 23 V250 H0 Z" className={styles.signalFill}/>
-        <path d="M0 198 L55 188 L94 210 L144 144 L192 166 L245 82 L284 112 L337 74 L372 128 L414 70 L462 91 L520 26 L566 54 L622 0 L676 38 L721 8 L800 23" className={styles.signalLine}/>
-        <text id="signal-caption" x="28" y="230" className={styles.signalCaption}>Illustrative signal / not live market data</text>
-      </svg>
-    </figure>}
-    {project.description && <p className={styles.description}>{project.description}</p>}
-    {project.details.length > 0 && <button className={styles.expandBtn} onClick={() => setExpanded(!expanded)} aria-expanded={expanded} aria-controls={detailsId} aria-label={expanded ? `Collapse details for ${project.title}` : `Expand details for ${project.title}`}>{expanded ? 'Less' : 'Details'}</button>}
-    <div id={detailsId} className={styles.details} hidden={!expanded}>{project.details.map((detail) => <div key={detail.heading} className={styles.detailBlock}><h4 className={styles.detailHeading}>{detail.heading}</h4><p className={styles.detailBody}>{detail.body}</p></div>)}</div>
-    {project.stack.length > 0 && <ul className={styles.stack} role="list" aria-label="Tech stack">{project.stack.map((tech) => { const icon = resolveIcon(tech); return <li key={tech} className={styles.tag}>{icon && <Icon icon={icon} width={12} height={12} aria-hidden/>}{tech}</li> })}</ul>}
-  </li>
+const COMPACT = '(max-width: 900px)'
+const STATUS: Record<string, string> = { active: 'Running', beta: 'In beta', deprecated: 'Retired' }
+
+function useCompact() {
+  const [compact, setCompact] = useState(() => typeof window.matchMedia === 'function' && window.matchMedia(COMPACT).matches)
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return
+    const query = window.matchMedia(COMPACT)
+    const update = () => setCompact(query.matches)
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+  return compact
 }
+
+function Flow({ steps }: { steps: string[] }) {
+  return <ol className={styles.flow} aria-label="How it runs" style={{ '--steps': steps.length } as CSSProperties}>
+    {steps.map((step, index) => <li key={step} style={{ '--i': index } as CSSProperties}><span className={styles.node} aria-hidden/>{step}</li>)}
+  </ol>
+}
+
+function Run({ project }: { project: ProjectData }) {
+  const [open, setOpen] = useState(false)
+  const impact = project.details.find((detail) => detail.heading.toLowerCase() === 'impact')
+  const background = project.details.filter((detail) => detail !== impact)
+  const hasLink = !!project.url && project.url !== '#'
+  const status = STATUS[project.status] ?? project.status
+  return <article id={`run-${project.id}`} className={styles.run} aria-labelledby={`run-title-${project.id}`}>
+    <header className={styles.runHeader}>
+      <h3 id={`run-title-${project.id}`}>{project.title}</h3>
+      {status && <p className={styles.status}>{status}</p>}
+    </header>
+    {project.description && <p className={styles.summary}>{project.description}</p>}
+    {project.flow.length > 0 && <Flow steps={project.flow}/>}
+    <div className={styles.facts}>
+      {impact && <div><h4>Impact</h4><p className={styles.impact}>{impact.body}</p></div>}
+      {project.stack.length > 0 && <div><h4>Built with</h4><p>{project.stack.join(', ')}</p></div>}
+    </div>
+    <div className={styles.actions}>
+      {background.length > 0 && <button type="button" className={styles.more} aria-expanded={open} aria-controls={`background-${project.id}`} onClick={() => setOpen(!open)}>{open ? 'Hide context and decisions' : 'Show context and decisions'}</button>}
+      {hasLink && <a className={styles.source} href={project.url} target="_blank" rel="noopener noreferrer">View source on GitHub</a>}
+    </div>
+    <div id={`background-${project.id}`} className={styles.background} hidden={!open}>
+      {background.map((detail) => <div key={detail.heading}><h4>{detail.heading}</h4><p>{detail.body}</p></div>)}
+    </div>
+  </article>
+}
+
 export default function Projects({ projects }: { projects: ProjectData[] }) {
-  const featured = projects.filter((project) => project.status !== 'deprecated')
-  const archived = projects.filter((project) => project.status === 'deprecated')
-  return <section className={styles.projects} aria-label="Projects"><div className={styles.inner}><h2 className={styles.heading}>Projects</h2>
-    <ul className={styles.grid} role="list">{featured.map((project, i) => <ProjectCard key={project.id} project={project} index={i + 1} featured={i === 0}/>)}</ul>
-    {archived.length > 0 && <><div className={styles.archiveDivider}><span>Archived</span></div><ul className={`${styles.grid} ${styles.archivedList}`} role="list">{archived.map((project, i) => <ProjectCard key={project.id} project={project} index={featured.length + i + 1}/>)}</ul></>}
-  </div></section>
+  const compact = useCompact()
+  const [selected, setSelected] = useState(projects[0]?.id ?? '')
+  const live = projects.filter((project) => project.status !== 'deprecated')
+  const retired = projects.filter((project) => project.status === 'deprecated')
+  const current = projects.find((project) => project.id === selected)
+
+  useEffect(() => {
+    const follow = () => {
+      const id = window.location.hash.replace(/^#project-/, '')
+      if (id !== window.location.hash && projects.some((project) => project.id === id)) setSelected(id)
+    }
+    follow()
+    window.addEventListener('hashchange', follow)
+    return () => window.removeEventListener('hashchange', follow)
+  }, [projects])
+
+  const station = (project: ProjectData) => {
+    const active = project.id === selected
+    return <li key={project.id} id={`project-${project.id}`} className={styles.stop}>
+      <button type="button" className={styles.pick} aria-expanded={active} aria-controls={active ? `run-${project.id}` : undefined} onClick={() => setSelected(project.id)}>
+        <span className={styles.station} aria-hidden/>{project.title}
+      </button>
+      {compact && active && <Run key={project.id} project={project}/>}
+    </li>
+  }
+
+  return <section className={styles.projects} aria-label="Projects">
+    <div className={styles.layout}>
+      <div className={styles.index}>
+        <h2 className={styles.heading}>Projects</h2>
+        <ul role="list">{live.map(station)}</ul>
+        {retired.length > 0 && <><h3 className={styles.group}>Retired</h3><ul role="list">{retired.map(station)}</ul></>}
+      </div>
+      {!compact && current && <Run key={current.id} project={current}/>}
+    </div>
+  </section>
 }

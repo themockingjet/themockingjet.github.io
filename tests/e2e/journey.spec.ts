@@ -44,17 +44,17 @@ test('keyboard navigation preserves form arrow keys', async ({ page }) => {
 })
 
 test('wheel scrolls overflowing content before advancing', async ({ page }) => {
-  await page.goto('/#projects')
-  const panel = page.locator('#projects')
+  await page.goto('/#about')
+  const panel = page.locator('#about')
   await panel.hover()
   const canScroll = await panel.evaluate((element) => element.scrollHeight > element.clientHeight)
   expect(canScroll).toBe(true)
   await page.mouse.wheel(0, 500)
   await expect.poll(() => panel.evaluate((element) => element.scrollTop)).toBeGreaterThan(0)
-  await expect(page).toHaveURL(/#projects$/)
+  await expect(page).toHaveURL(/#about$/)
   await panel.evaluate((element) => { element.scrollTop = element.scrollHeight })
   await page.mouse.wheel(0, 500)
-  await expect(page).toHaveURL(/#lab$/)
+  await expect(page).toHaveURL(/#contact$/)
 })
 
 test('horizontal trackpad input changes destination without intercepting zoom gestures', async ({ page }) => {
@@ -69,7 +69,7 @@ test('horizontal trackpad input changes destination without intercepting zoom ge
 
 test('focused project disclosure is not hidden behind fixed navigation', async ({ page }) => {
   await page.goto('/#projects')
-  const button = page.getByRole('button', { name: /expand details for Binance/i })
+  const button = page.getByRole('button', { name: /show context and decisions/i })
   await button.focus()
   await expect(button).toBeFocused()
   const buttonBox = await button.boundingBox()

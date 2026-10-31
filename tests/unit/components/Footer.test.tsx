@@ -19,7 +19,7 @@ describe('Footer component', () => {
     })
 
     it('should display the technology stack', () => {
-      expect(screen.getByText('vite · react · typescript')).toBeInTheDocument()
+      expect(screen.getByText('Built with Vite, React and TypeScript')).toBeInTheDocument()
     })
   })
 })

@@ -341,14 +341,12 @@ main { padding-top: var(--topbar-height); }
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-text-faint); border-radius: 2px; }
-.contact { min-height: calc(100dvh - 134px); display: flex; align-items: center; padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5.5vw, 5rem); }
-.contact-inner { width: 100%; max-width: 1440px; margin: auto; }
-.contact-label { color: #9bdde0; margin-bottom: 1rem; }
+.contact { max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; display: flex; align-items: center; padding: clamp(2rem, 5vw, 4rem) var(--frame-pad); }
+.contact-inner { width: 100%; }
 .contact h2 { font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.05; letter-spacing: -.05em; max-width: 14ch; }
 .contact-action { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; margin: 3rem 0; }
 .contact-action p { color: var(--color-text-muted); }
 .contact-action a { display: inline-block; padding: .9rem 1.3rem; background: #e9c18b; color: #17130e; border-radius: 3px; font-weight: 700; }
-:root[data-mode="light"] .contact-label { color: #24626a; }
 @media (max-width: 700px) {
   .contact { min-height: 100%; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
   .contact-inner { align-self: stretch; min-height: 100%; margin: 0 auto; display: flex; flex-direction: column; }

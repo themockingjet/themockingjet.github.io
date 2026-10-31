@@ -47,7 +47,7 @@ export default function App() {
         <Projects projects={portfolio.projects} />
         <AutomationLab />
         <><About data={portfolio.about} /><div id="skills"><Skills skills={portfolio.skills} /></div></>
-        <section className="contact" aria-labelledby="contact-heading"><div className="contact-inner"><p className="contact-label">The next possibility</p><h2 id="contact-heading">{portfolio.hero.contactHeadline}</h2><div className="contact-action"><p>Find Jet on GitHub.</p><a href={portfolio.hero.github}>Visit GitHub profile ↗</a></div><Footer /></div></section>
+        <section className="contact" aria-labelledby="contact-heading"><div className="contact-inner"><h2 id="contact-heading">{portfolio.hero.contactHeadline}</h2><div className="contact-action"><p>Find Jet on GitHub.</p><a href={portfolio.hero.github}>Visit GitHub profile</a></div><Footer /></div></section>
       </Journey>
     </>
   )

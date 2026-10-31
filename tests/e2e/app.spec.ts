@@ -47,22 +47,22 @@ test.describe('Critical user flows', () => {
     expect(darkAfter).toBeNull()
   })
 
-  test('project card expands and collapses', async ({ page }) => {
-    await page.goto('/')
-    await page.locator('section[aria-label="Projects"]').scrollIntoViewIfNeeded()
-    // Find first details button
-    const detailBtn = page.getByRole('button', { name: /details/i }).first()
-    await detailBtn.click()
-    // Should show collapse button
-    await expect(page.getByRole('button', { name: /collapse/i }).first()).toBeVisible()
-    // Collapse
-    await page.getByRole('button', { name: /collapse/i }).first().click()
-    // Should show details button again
-    await expect(detailBtn).toBeVisible()
+  test('project run reveals and hides its context', async ({ page }) => {
+    await page.goto('/#projects')
+    const projects = page.locator('section[aria-label="Projects"]')
+    await projects.getByRole('button', { name: /show context and decisions/i }).click()
+    const hide = projects.getByRole('button', { name: /hide context and decisions/i })
+    await expect(hide).toBeVisible()
+    await hide.click()
+    await expect(projects.getByRole('button', { name: /show context and decisions/i })).toBeVisible()
+  })
+
+  test('picking a project from the index opens its run', async ({ page }) => {
+    await page.goto('/#projects')
+    const projects = page.locator('section[aria-label="Projects"]')
+    await projects.getByRole('button', { name: 'Discord Axie Infinity Marketplace' }).click()
+    await expect(projects.getByRole('article')).toHaveAccessibleName('Discord Axie Infinity Marketplace')
+    await expect(projects.getByRole('list', { name: 'How it runs' })).toBeVisible()
   })
 })
 
-test('featured project includes an accessible illustrative signal chart', async ({ page }) => {
-  await page.goto('/#projects')
-  await expect(page.getByRole('img', { name: /Illustrative event signal.*not live market data/i })).toBeVisible()
-})
