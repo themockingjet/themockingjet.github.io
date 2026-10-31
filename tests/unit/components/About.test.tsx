@@ -33,7 +33,7 @@ describe('About component', () => {
     })
 
     it('should render the heading as h2', () => {
-      expect(screen.getByRole('heading', { level: 2, name: 'About' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 2, name: 'Curiosity is the constant.' })).toBeInTheDocument()
     })
   })
 

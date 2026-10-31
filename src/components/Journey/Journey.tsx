@@ -94,6 +94,15 @@ export default function Journey({ children }: { children: ReactNode[] }) {
     return () => window.removeEventListener('keydown', key)
   }, [show])
 
+  // Fragment links focus the target panel too; its ring only helps people who reached it with the keyboard.
+  useEffect(() => {
+    const keys = (event: KeyboardEvent) => { if (event.key === 'Tab') track.current?.setAttribute('data-keys', '') }
+    const pointer = () => track.current?.removeAttribute('data-keys')
+    window.addEventListener('keydown', keys)
+    window.addEventListener('pointerdown', pointer)
+    return () => { window.removeEventListener('keydown', keys); window.removeEventListener('pointerdown', pointer) }
+  }, [])
+
   useEffect(() => {
     const element = track.current
     if (!element) return
