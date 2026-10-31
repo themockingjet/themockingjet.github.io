@@ -75,6 +75,8 @@ button {
   /* Layout */
   --container-max:      780px;
   --container-pad:      var(--space-8);
+  --frame-max:          1320px;
+  --frame-pad:          clamp(1rem, 4vw, 3rem);
 
   /* Spacing */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
@@ -257,12 +259,10 @@ body::before {
 
 #root { position: relative; z-index: 1; }
 
-/* Reduce texture in light mode */
+/* Light mode: the dark fabric grain muddies pale surfaces, so keep only a faint dot grid */
 [data-mode="light"] body::before {
-  opacity: 0.25;
-  background-image:
-    url('/textures/classy-fabric.png'),
-    radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 0);
+  background-image: radial-gradient(circle, rgba(20, 24, 32, 0.05) 1px, transparent 0);
+  background-size: 28px 28px;
 }
 
 /* Shared section container */
