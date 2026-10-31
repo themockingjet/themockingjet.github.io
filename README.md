@@ -38,4 +38,4 @@ React, TypeScript, Vite and CSS Modules implement the UI. GSAP animates the canv
 
 ## Deployment and rollback
 
-Pushes to `main` trigger the GitHub Pages workflow. Review the production build and validation results before merging. The previous deployment commit is the rollback reference; revert the migration through a follow-up commit and let the Pages workflow redeploy if needed.
+The `CI` workflow runs lint, unit tests, build, and e2e tests on every push and PR (PRs also get Lighthouse scores in the job summary). Pushes to `main` deploy to GitHub Pages only after all checks pass. Dependabot opens grouped weekly update PRs, and a weekly link check opens an issue if any links break. The previous deployment commit is the rollback reference; revert the migration through a follow-up commit and let the Pages workflow redeploy if needed.

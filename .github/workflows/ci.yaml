@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+      - name: Lighthouse
+        id: lighthouse
+        if: github.event_name == 'pull_request'
+        uses: treosh/lighthouse-ci-action@12.6.2
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+      - name: Lighthouse summary
+        if: github.event_name == 'pull_request'
+        env:
+          MANIFEST: ${{ steps.lighthouse.outputs.manifest }}
+        run: |
+          {
+            echo "### 🔦 Lighthouse"
+            echo "| Performance | Accessibility | Best practices | SEO |"
+            echo "|---|---|---|---|"
+            echo "$MANIFEST" | jq -r '.[] | select(.isRepresentativeRun) | .summary
+              | [.performance, .accessibility, ."best-practices", .seo]
+              | map(. * 100 | round | tostring) | "| " + join(" | ") + " |"'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+  deploy:
+    needs: checks
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+      - name: Summary
+        env:
+          URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          echo "### 🚀 Live at $URL" >> "$GITHUB_STEP_SUMMARY"
+          echo "Deployed commit \`${GITHUB_SHA::7}\`" >> "$GITHUB_STEP_SUMMARY"
