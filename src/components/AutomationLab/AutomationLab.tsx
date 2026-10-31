@@ -19,11 +19,10 @@ export default function AutomationLab() {
   }, [running, simulation.phase])
 
   return <section className={styles.lab} aria-labelledby="lab-heading">
-    <div className={styles.inner}>
-      <div className={styles.heading}><div><p className={styles.eyebrow}>Inside the lab</p><h2 id="lab-heading">See an automation pipeline in action.</h2></div><p>Explore a local simulation of event handling. No data is sent and no real action is executed.</p></div>
+    <div>
+      <h2 id="lab-heading" className={styles.heading}>See an automation pipeline in action.</h2>
       <div className={styles.columns}>
       <div className={styles.controls}>
-        <p className={styles.badge}>Synthetic simulation</p>
         <h3>A little failure.<br/>A better system.</h3>
         <p>Send a synthetic event through the pipeline. Introduce a temporary failure and watch the system recover with a bounded retry.</p>
         <label>Scenario <select value={scenario} disabled={running} onChange={(event) => setScenario(event.target.value as Scenario)}>

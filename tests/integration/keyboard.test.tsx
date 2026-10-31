@@ -25,10 +25,10 @@ describe('Keyboard navigation', () => {
     it('should expand project details when Enter is pressed on the button', async () => {
       const user = userEvent.setup()
       render(<App />)
-      const detailBtns = await screen.findAllByRole('button', { name: /details/i }, { timeout: 3000 })
+      const detailBtns = await screen.findAllByRole('button', { name: /show context and decisions/i }, { timeout: 3000 })
       detailBtns[0].focus()
       await user.keyboard('{Enter}')
-      expect(screen.getByRole('button', { name: /collapse/i })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /hide context and decisions/i })).toBeInTheDocument()
     })
 
     it('should set rel="noopener" on all external links', () => {

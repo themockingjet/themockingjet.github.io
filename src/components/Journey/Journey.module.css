@@ -3,6 +3,8 @@
 .track[data-travelling] { scroll-snap-type: none; filter: url(#journey-motion); }
 .filters { position: absolute; width: 0; height: 0; overflow: hidden; }
 .panel { flex: 0 0 100%; min-width: 0; overflow-y: auto; overscroll-behavior-y: contain; scroll-snap-align: start; }
+.panel:focus-visible { outline: none; }
+.track[data-keys] .panel:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
 .itinerary { position: fixed; z-index: 90; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: clamp(.25rem, 2vw, 1.25rem); padding: .5rem max(.5rem, env(safe-area-inset-right)) max(.5rem, env(safe-area-inset-bottom)) max(.5rem, env(safe-area-inset-left)); background: var(--topbar-bg); border-top: 1px solid var(--color-border); }
 
 /* Stations sit at the centre of equal-width links, so the line runs from the first centre to the last. */

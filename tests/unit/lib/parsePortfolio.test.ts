@@ -27,6 +27,7 @@ match_reason: A web interface.
 status: active
 url: https://example.com
 stack: React, TypeScript
+flow: Fetch > Transform >  Publish
 
 A tool that does things.
 
@@ -122,6 +123,14 @@ describe('parsePortfolio', () => {
         expect(data.projects[0].status).toBe('active')
         expect(data.projects[0].url).toBe('https://example.com')
         expect(data.projects[0].stack).toEqual(['React', 'TypeScript'])
+      })
+
+      it('should split the flow into trimmed steps', () => {
+        expect(data.projects[0].flow).toEqual(['Fetch', 'Transform', 'Publish'])
+      })
+
+      it('should default flow to an empty list when not specified', () => {
+        expect(data.projects[1].flow).toEqual([])
       })
 
       it('should parse the project description', () => {

@@ -29,6 +29,7 @@ interests: automation, real-time, backend
 match_reason: Streaming market events feed backend rules that trigger automated actions.
 status: beta
 stack: Bun, TypeScript, Binance API, Binance Websocket, TA-Lib, Svelte, Tailwind CSS
+flow: Websocket stream > Indicators > Signal check > Place order
 
 Real-time market signals arrive and expire in milliseconds — reacting to them manually isn't viable. Built a bot that subscribes to Binance Websocket streams, evaluates TA-Lib indicators in real time, and executes positions automatically.
 
@@ -51,6 +52,7 @@ match_reason: A React interface combines a Markdown content pipeline with static
 status: beta
 url: https://github.com/themockingjet/themockingjet.github.io
 stack: React, TypeScript, Vite, GitHub Pages
+flow: Markdown > Parser > React journey > GitHub Pages
 
 This site. Built from scratch with Markdown-driven content, CSS Modules, and an animated journey.
 
@@ -72,6 +74,7 @@ interests: automation, backend, real-time
 match_reason: An archived Node.js bot handled live listings and automated marketplace coordination.
 status: deprecated
 stack: Discord.js, MongoDB, JavaScript, Node.js
+flow: Marketplace listings > Match buyers > Discord command > Settle trade
 
 Axie NFT prices moved by the minute and buyers couldn't coordinate fast enough manually. Built a Discord bot that handled the full transaction loop.
 
@@ -93,6 +96,7 @@ interests: automation, desktop
 match_reason: An AutoHotkey script automated desktop session monitoring and input.
 status: deprecated
 stack: AutoHotkey
+flow: Idle timer > Send input > Watch connection > Alert on drop
 
 SecondLife disconnects idle accounts automatically, breaking long sessions. Built an AHK script that kept sessions alive.
 
@@ -114,6 +118,7 @@ interests: automation, desktop
 match_reason: An AutoHotkey script automated a repeated desktop game workflow.
 status: deprecated
 stack: AutoHotkey
+flow: Walk to NPC > Read dialogue > Pick reward > Loop
 
 Ticket questing in Ragnarok required the same NPC sequence, dozens of times per session. Automated the full loop.
 
