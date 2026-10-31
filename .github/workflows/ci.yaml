@@ -45,7 +45,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: treosh/lighthouse-ci-action@12.6.2
         with:
-          staticDistDir: ./dist
+          configPath: ./lighthouserc.json
           uploadArtifacts: true
       - name: Lighthouse summary
         if: github.event_name == 'pull_request'
