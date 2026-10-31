@@ -17,7 +17,7 @@ export default function Nav({ name, dark, onToggleDark, theme, onThemeChange }: 
   }, [themeOpen])
   const current = THEMES.find((item) => item.id === theme)!
   return <header className={styles.bar} data-el="nav-bar"><div className={styles.inner}>
-    <a className={styles.brand} href="#hero" aria-label={`${name} home`}><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="5"/><ellipse cx="16" cy="16" rx="15" ry="6" transform="rotate(-35 16 16)"/></svg><span>jet.</span></a>
+    <a className={styles.brand} href="#hero" aria-label={`jet. ${name} home`}><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="5"/><ellipse cx="16" cy="16" rx="15" ry="6" transform="rotate(-35 16 16)"/></svg><span>jet.</span></a>
     <span className={styles.tagline}>A journey beyond the manual.</span>
     <div className={styles.preferences}>
       <a className={styles.raw} href="/raw/portfolio.md" target="_blank" rel="noopener noreferrer">Markdown</a>
