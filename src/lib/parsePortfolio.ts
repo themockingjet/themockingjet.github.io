@@ -38,6 +38,7 @@ export interface ProjectData {
   status: string
   url: string
   stack: string[]
+  flow: string[]
   description: string
   details: ProjectDetail[]
 }
@@ -145,6 +146,7 @@ function parseProjects(raw: string): ProjectData[] {
       status: meta.status ?? '',
       url: meta.url ?? '',
       stack,
+      flow: (meta.flow ?? '').split('>').map((step) => step.trim()).filter(Boolean),
       description: descLines.join('\n').trim(),
       details,
     })
