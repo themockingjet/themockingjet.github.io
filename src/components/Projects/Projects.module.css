@@ -5,8 +5,6 @@
 
 /* The index is a vertical route: one station per project, joined by the same dotted line as the footer. */
 .index ul { position: relative; }
-.index { position: relative; }
-.selectionMarker { position: absolute; left: 16px; top: 0; width: 3px; height: 24px; background: var(--color-accent); border-radius: 2px; transition: transform .45s cubic-bezier(.22, 1, .36, 1); pointer-events: none; }
 .index ul::before { content: ''; position: absolute; top: 1.4rem; bottom: 1.4rem; left: 6.25px; width: 1.5px; background: repeating-linear-gradient(180deg, var(--color-text-faint) 0 2px, transparent 2px 6px); opacity: .7; }
 .group { margin: 1.75rem 0 .35rem 1.9rem; color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); }
 .pick { position: relative; display: flex; align-items: center; gap: 1rem; width: 100%; min-height: 2.8rem; padding: .3rem 0; border: 0; background: none; color: var(--color-text-muted); font: 500 1.05rem/1.25 var(--font-heading); letter-spacing: -.01em; text-align: left; cursor: pointer; transition: color .2s; }
@@ -59,7 +57,6 @@
 @media (prefers-reduced-motion: reduce) {
   .flow li::after, .node, :global([data-intro]) .heading, .pick[aria-expanded="true"]::after { animation: none; }
   .disclosure, .runHeader, .summary, .facts, .actions { transition: none; animation: none; }
-  .selectionMarker { transition: none; }
 }
 
 /* Below 900px the index becomes an accordion: the chosen project opens under its own station. */
