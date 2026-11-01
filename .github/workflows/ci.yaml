@@ -114,7 +114,10 @@ jobs:
 
   deploy:
     needs: checks
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # Lighthouse is skipped on pushes, so gate on the checks result directly.
+    if: >-
+      !cancelled() && needs.checks.result == 'success' &&
+      github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pages: write
