@@ -23,7 +23,7 @@
 
 .run { min-width: 0; max-width: 52rem; padding-top: .5rem; }
 .runHeader, .summary, .facts, .actions { animation: detail-arrive .48s cubic-bezier(.16, 1, .3, 1) both; }
-@keyframes detail-arrive { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes detail-arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .runHeader { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; }
 .runHeader h3 { min-width: 0; overflow-wrap: anywhere; font-family: var(--font-heading); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -.035em; }
 .status { color: var(--color-text-faint); font-size: .9rem; }
