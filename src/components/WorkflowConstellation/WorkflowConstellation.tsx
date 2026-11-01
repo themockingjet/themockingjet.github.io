@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './WorkflowConstellation.module.css'
 
 type Place = { x: number; y: number; label: string; above?: boolean; failsafe?: boolean }
@@ -76,6 +76,7 @@ const arrivals = [
 ]
 
 export default function WorkflowConstellation({ className }: { className?: string }) {
+  const [selected, setSelected] = useState<Station | null>(null)
   const root = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
@@ -113,7 +114,7 @@ export default function WorkflowConstellation({ className }: { className?: strin
     }
   }, [])
 
-  return <svg ref={root} className={`${styles.constellation} ${className ?? ''}`} viewBox="0 0 800 680" aria-hidden="true">
+  return <svg ref={root} className={`${styles.constellation} ${className ?? ''}`} data-exploring={selected !== null || undefined} viewBox="0 0 800 680" role="group" aria-label="Explore the automation workflow" onPointerLeave={() => setSelected(null)}>
     <defs>
       <radialGradient id="constellation-halo"><stop stopColor="#5f8fa3" stopOpacity=".14" /><stop offset="1" stopColor="#5f8fa3" stopOpacity="0" /></radialGradient>
       <filter id="pulse-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -129,7 +130,7 @@ export default function WorkflowConstellation({ className }: { className?: strin
     <g className={styles.edges}>
       {edges.map(([from, to, bend]) => {
         const tone = toneOf(from, to)
-        return <path key={`${from}-${to}`} className={tone === 'muted' ? styles.rejectEdge : tone === 'recovery' ? styles.recoveryEdge : undefined} d={curve(from, to, bend)} />
+        return <path key={`${from}-${to}`} data-linked={selected === from || selected === to || undefined} className={tone === 'muted' ? styles.rejectEdge : tone === 'recovery' ? styles.recoveryEdge : undefined} d={curve(from, to, bend)} />
       })}
       <path className={styles.orbit} d={curve('deliver', 'deliver')} />
     </g>
@@ -149,7 +150,11 @@ export default function WorkflowConstellation({ className }: { className?: strin
     {(Object.keys(stations) as Station[]).map(id => {
       const { x, y, label, ...place }: Place = stations[id]
       const className = id === 'rejected' ? styles.rejected : place.failsafe ? styles.failsafe : styles.station
-      return <g key={id} className={className}>
+      return <g key={id} className={`${className} ${styles.interactive}`} role="button" tabIndex={0} aria-label={`Trace ${label}`} aria-pressed={selected === id} onPointerEnter={() => setSelected(id)} onFocus={() => setSelected(id)} onBlur={() => setSelected(null)} onClick={() => setSelected(id)} onKeyDown={event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelected(selected === id ? null : id) }
+        if (event.key === 'Escape') setSelected(null)
+      }}>
+        <circle className={styles.hitArea} cx={x} cy={y} r="24" />
         <circle className={styles.ring} cx={x} cy={y} r="10" />
         {place.failsafe && <circle className={styles.guard} cx={x} cy={y} r="15" />}
         <circle className={styles.core} cx={x} cy={y} r="3.6" />
