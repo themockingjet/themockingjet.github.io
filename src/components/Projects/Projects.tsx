@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import styles from './Projects.module.css'
 import type { ProjectData } from '../../lib/parsePortfolio'
 
@@ -44,8 +44,8 @@ function Run({ project }: { project: ProjectData }) {
       {background.length > 0 && <button type="button" className={styles.more} aria-expanded={open} aria-controls={`background-${project.id}`} onClick={() => setOpen(!open)}>{open ? 'Hide context and decisions' : 'Show context and decisions'}</button>}
       {hasLink && <a className={styles.source} href={project.url} target="_blank" rel="noopener noreferrer">View source on GitHub</a>}
     </div>
-    <div id={`background-${project.id}`} className={styles.background} hidden={!open}>
-      {background.map((detail) => <div key={detail.heading}><h4>{detail.heading}</h4><p>{detail.body}</p></div>)}
+    <div id={`background-${project.id}`} className={styles.disclosure} aria-hidden={!open} inert={!open}>
+      <div className={styles.background}>{background.map((detail) => <div key={detail.heading}><h4>{detail.heading}</h4><p>{detail.body}</p></div>)}</div>
     </div>
   </article>
 }
@@ -53,6 +53,22 @@ function Run({ project }: { project: ProjectData }) {
 export default function Projects({ projects }: { projects: ProjectData[] }) {
   const compact = useCompact()
   const [selected, setSelected] = useState(projects[0]?.id ?? '')
+  const indexRef = useRef<HTMLDivElement>(null)
+  const markerRef = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const index = indexRef.current
+    const marker = markerRef.current
+    if (!index || !marker) return
+    const position = () => {
+      const button = index.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+      if (button) marker.style.transform = `translateY(${button.getBoundingClientRect().top - index.getBoundingClientRect().top + button.offsetHeight / 2 - 12}px)`
+    }
+    position()
+    if (typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(position)
+    observer.observe(index)
+    return () => observer.disconnect()
+  }, [selected])
   const live = projects.filter((project) => project.status !== 'deprecated')
   const retired = projects.filter((project) => project.status === 'deprecated')
   const current = projects.find((project) => project.id === selected)
@@ -79,7 +95,8 @@ export default function Projects({ projects }: { projects: ProjectData[] }) {
 
   return <section className={styles.projects} aria-label="Projects">
     <div className={styles.layout}>
-      <div className={styles.index}>
+      <div ref={indexRef} className={styles.index}>
+        <span ref={markerRef} className={styles.selectionMarker} aria-hidden="true" />
         <h2 className={styles.heading}>Projects</h2>
         <ul role="list">{live.map(station)}</ul>
         {retired.length > 0 && <><h3 className={styles.group}>Retired</h3><ul role="list">{retired.map(station)}</ul></>}

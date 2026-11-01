@@ -1,4 +1,11 @@
 .constellation { display: block; overflow: visible; }
+.hitArea { fill: transparent; }
+.interactive { cursor: pointer; outline: none; }
+.edges path { transition: opacity .25s, stroke .25s, stroke-width .25s; }
+.constellation[data-exploring] .edges path { opacity: .08; }
+.constellation[data-exploring] .edges path[data-linked] { opacity: 1; stroke: var(--color-accent); stroke-width: 3; }
+.interactive[aria-pressed="true"] .ring, .interactive:focus-visible .ring { stroke: var(--color-accent); stroke-width: 3; stroke-opacity: 1; }
+.interactive[aria-pressed="true"] .label { fill: var(--color-accent); }
 .faint line { stroke: var(--color-text-faint); stroke-width: .6; stroke-dasharray: 1.5 6; opacity: .4; }
 .star { fill: var(--color-text-faint); opacity: .65; }
 .star:nth-of-type(3n) { animation: twinkle 3.2s ease-in-out infinite alternate; }
@@ -43,4 +50,4 @@
   .faint { display: none; }
 }
 
-@media (prefers-reduced-motion: reduce) { .star { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .star { animation: none; } .edges path { transition: none; } }

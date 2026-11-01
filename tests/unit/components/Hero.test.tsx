@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import Hero from '../../../src/components/Hero/Hero'
 import type { HeroData } from '../../../src/lib/parsePortfolio'
 
@@ -32,8 +32,13 @@ describe('Hero component', () => {
       expect(screen.getByText('Earth')).toBeInTheDocument()
     })
 
-    it('should render decorative lens artwork', () => {
-      expect(document.querySelector('svg[aria-hidden="true"]')).toBeInTheDocument()
+    it('should trace connected workflow paths with keyboard focus and clear them with Escape', () => {
+      const queue = screen.getByRole('button', { name: 'Trace Queue' })
+      fireEvent.focus(queue)
+      expect(queue).toHaveAttribute('aria-pressed', 'true')
+      expect(document.querySelectorAll('path[data-linked]')).toHaveLength(5)
+      fireEvent.keyDown(queue, { key: 'Escape' })
+      expect(document.querySelectorAll('path[data-linked]')).toHaveLength(0)
     })
   })
 

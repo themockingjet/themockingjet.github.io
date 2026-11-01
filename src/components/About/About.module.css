@@ -1,11 +1,17 @@
 .about { max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; display: flex; align-items: center; padding: clamp(2rem, 5vw, 4rem) var(--frame-pad); }
 .inner { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 10vw, 10rem); align-items: start; }
 .heading { font-family: var(--font-heading); font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.04em; max-width: 11ch; }
+:global([data-intro]) .heading { animation: about-title .5s ease-out both; }
+@keyframes about-title { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
 .persona { display: flex; align-items: center; gap: .75rem; color: var(--color-text-muted); margin-bottom: 1.75rem; }
-.persona select { color: var(--color-text); background: var(--color-bg-elevated); border: 1px solid #526477; padding: .5rem; font: inherit; max-width: 100%; }
+.persona select { color: var(--color-text); background: var(--color-bg-elevated); border: 1px solid #526477; padding: .5rem; font: inherit; max-width: 100%; transition: border-color .16s, background-color .16s; }
+.persona select:hover, .persona select:focus-visible { border-color: var(--color-accent); background-color: var(--color-bg-hover); }
 .slot + .slot { margin-top: 1.5rem; }
 .intent { color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); margin-bottom: .4rem; }
 .paragraph { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.65; }
 .lead { color: var(--color-text); font-family: var(--font-heading); font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.45; }
 .word { color: inherit; }
+.changed { animation: phrase-change 1.2s ease-out; box-decoration-break: clone; }
+@keyframes phrase-change { 0%, 65% { background: color-mix(in srgb, var(--color-accent) 32%, transparent); box-shadow: 0 2px 0 var(--color-accent); } 100% { background: transparent; box-shadow: 0 2px 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .persona select { transition: none; } .changed, :global([data-intro]) .heading { animation: none; } }
 @media (max-width: 700px) { .about { align-items: start; padding-top: 2rem; } .inner { grid-template-columns: 1fr; gap: 2rem; } }

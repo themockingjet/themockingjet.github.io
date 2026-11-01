@@ -2,10 +2,15 @@
 .content { position: relative; z-index: 1; }
 .label { color: var(--color-accent); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 1.5rem; }
 .content h1 { font-family: var(--font-heading); font-size: clamp(3rem, 5.6vw, 5.25rem); line-height: 1.03; letter-spacing: -.05em; }
+:global([data-intro]) .content h1 { animation: home-title .5s ease-out both; }
+:global([data-intro]) .label, :global([data-intro]) .title, :global([data-intro]) .tagline { animation: home-copy .22s ease-out both; }
+@keyframes home-title { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes home-copy { from { opacity: .65; } to { opacity: 1; } }
 .title { margin-top: 1.5rem; font-size: clamp(1.1rem, 2vw, 1.5rem); }
 .tagline { color: var(--color-text-muted); max-width: 34ch; margin: 1rem 0 2rem; font-size: 1.15rem; }
-.profile { display: inline-block; color: var(--color-text-muted); text-decoration: underline; }
-.lens { width: 100%; max-width: 760px; justify-self: center; pointer-events: none; }
+.profile { display: inline-block; color: var(--color-text-muted); text-decoration: underline; text-underline-offset: .2em; text-decoration-color: color-mix(in srgb, var(--color-text-muted) 50%, transparent); transition: color .16s, text-decoration-color .16s, text-underline-offset .16s; }
+.profile:hover, .profile:focus-visible { color: var(--color-accent); text-decoration-color: currentColor; text-underline-offset: .3em; }
+.lens { width: 100%; max-width: 760px; justify-self: center; }
 /* Portrait screens below desktop stack the hero into exactly one screen: the copy takes what it needs and the graph scales into the rest. */
 @media (max-width: 1023px) and (orientation: portrait) {
   .hero { display: flex; flex-direction: column; height: 100%; min-height: 0; gap: clamp(1rem, 4vh, 2.5rem); }
@@ -20,4 +25,5 @@
   .lens { width: calc(100% + 2.5rem); margin-inline: -1.25rem; min-height: 160px; }
 }
 @media (max-width: 380px) { .content h1 { font-size: 2.5rem; } .label { font-size: .7rem; letter-spacing: .12em; } }
+@media (prefers-reduced-motion: reduce) { .profile { transition: none; } :global([data-intro]) .content h1, :global([data-intro]) .label, :global([data-intro]) .title, :global([data-intro]) .tagline { animation: none; } }
 @media (max-width: 1023px) and (orientation: portrait) and (max-height: 560px) { .hero { height: auto; } .lens { flex: none; height: 240px; } }
