@@ -10,7 +10,7 @@ Personal portfolio of Jet, an Associate Software Engineer focused on automation.
 - **Journey navigation** — keyboard, wheel, swipe and footer route navigation with deep links to every destination and project.
 - **Warp transitions** — pages glide with a speed-matched motion blur while the star field moves with parallax.
 - **Projects as runs** — each project shows its automation flow, impact and stack, with retired projects listed separately.
-- **Automation lab** — a local simulation of a pipeline run using fixed synthetic events; nothing leaves the browser.
+- **Automation lab** — an experiment bench for the bots in Projects. Pick a hypothesis (jitter, circuit breaker, idempotency keys, batching, timeouts), and a seeded discrete-event simulation runs control and variant over the same traffic for 20 trials, then reports whether the change helped and what it cost. Everything runs in the browser.
 - **Themes** — six accent colours plus light and dark modes, remembered between visits.
 - **Accessible by default** — keyboard focus, reduced-motion support and WCAG A/AA checks in CI.
 
@@ -81,7 +81,7 @@ The parser runs when the page loads and throws a descriptive error if any requir
 src/
   components/   UI components, one folder each with a CSS Module
   content/      portfolio.md, the single source of content
-  lib/          Markdown parser, lab simulator and themes
+  lib/          Markdown parser, lab engine and experiments, themes
   styles/       global styles and design tokens
 tests/
   unit/         component and library tests

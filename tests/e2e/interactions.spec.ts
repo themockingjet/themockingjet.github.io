@@ -1,22 +1,19 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
-test('lab scenarios complete, cancel and reset', async ({ page }) => {
+test('lab experiments run, skip and report a verdict', async ({ page }) => {
   await page.goto('/#lab')
-  const lab = page.getByRole('region', { name: 'See an automation pipeline in action.' })
-  await lab.getByLabel('Scenario').selectOption('retry')
-  await lab.getByRole('button', { name: 'Run simulation' }).click()
-  await expect(lab.getByRole('status')).toHaveText('Status: complete', { timeout: 6000 })
-  await expect(lab.getByText('Delivery attempt 2 of 2.')).toBeVisible()
-  await lab.getByLabel('Scenario').selectOption('duplicate')
-  await lab.getByRole('button', { name: 'Run simulation' }).click()
-  await expect(lab.getByRole('status')).toHaveText('Status: duplicate', { timeout: 4000 })
-  await expect(lab.getByText(/no second action dispatched/)).toBeVisible()
-  await lab.getByRole('button', { name: 'Run simulation' }).click()
-  await lab.getByRole('button', { name: 'Cancel' }).click()
-  await expect(lab.getByRole('status')).toHaveText('Status: cancelled')
-  await lab.getByRole('button', { name: 'Reset' }).click()
-  await expect(lab.getByRole('status')).toHaveText('Status: ready')
+  const lab = page.getByRole('region', { name: 'Change one thing. Measure what happens.' })
+  await lab.getByRole('button', { name: 'Run experiment' }).click()
+  await expect(lab.getByRole('status')).toHaveText('Supported.', { timeout: 8000 })
+  await expect(lab.getByText(/Rate-limited calls fell from/)).toBeVisible()
+  await lab.getByRole('radio', { name: 'Discord' }).check()
+  await expect(lab.getByRole('status')).toHaveText('Ready to run 20 trials on the same traffic.')
+  await lab.getByRole('radio', { name: /Doubling the workers/ }).check()
+  await lab.getByRole('button', { name: 'Run experiment' }).click()
+  await lab.getByRole('button', { name: 'Skip to result' }).click()
+  await expect(lab.getByRole('status')).toHaveText('Not supported.')
+  await expect(lab.getByRole('button', { name: 'Run again on new traffic' })).toBeVisible()
 })
 
 test('key destination states have no WCAG A or AA violations', async ({ page }) => {
