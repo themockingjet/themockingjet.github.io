@@ -33,7 +33,7 @@ test('keyboard navigation preserves form arrow keys', async ({ page }) => {
   await page.keyboard.press('ArrowRight')
   await expect(page).toHaveURL(/#projects$/)
   await page.goto('/#lab')
-  await page.getByLabel('Scenario').focus()
+  await page.getByRole('radio', { name: 'Discord' }).focus()
   await page.keyboard.press('ArrowRight')
   await expect(page).toHaveURL(/#lab$/)
   await page.locator('#lab').focus()
