@@ -55,10 +55,9 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-shell
+      # The runner image already ships Chrome's system libraries, so skip apt.
       - if: steps.browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps --only-shell chromium
-      - if: steps.browsers.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
+        run: npx playwright install --only-shell chromium
 
       - run: npx playwright test --project=${{ matrix.project }}
       - name: Upload Playwright report
@@ -114,7 +113,10 @@ jobs:
 
   deploy:
     needs: checks
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # Lighthouse is skipped on pushes, so gate on the checks result directly.
+    if: >-
+      !cancelled() && needs.checks.result == 'success' &&
+      github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pages: write
