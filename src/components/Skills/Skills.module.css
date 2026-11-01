@@ -1,7 +1,14 @@
 .skills { max-width: var(--frame-max); margin: 0 auto; padding: clamp(2rem, 6vh, 4rem) var(--frame-pad) clamp(3rem, 8vh, 5rem); }
 .inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 10vw, 10rem); align-items: start; padding-top: clamp(2rem, 5vh, 3rem); border-top: 1px solid var(--color-border); }
+.inner { position: relative; }
+.inner::before { content: ''; position: absolute; top: -1px; left: 0; height: 1px; width: 100%; background: var(--color-accent); transform: scaleX(0); transform-origin: left; }
+.skills[data-visible] .inner::before { animation: skills-rule .7s ease-out .1s both; }
+.skills[data-visible] .groups { animation: skills-arrive .5s ease-out .1s both; }
+@keyframes skills-rule { to { transform: scaleX(1); } }
+@keyframes skills-arrive { from { opacity: .65; } to { opacity: 1; } }
 .heading { font-family: var(--font-heading); font-size: clamp(2rem, 3.5vw, 2.75rem); line-height: 1.05; letter-spacing: -.035em; }
 .groups { display: grid; gap: 2rem; }
 .groupLabel { margin-bottom: .6rem; color: var(--color-text-faint); font: 500 .8rem/1.2 var(--font-heading); }
 .list { display: flex; flex-wrap: wrap; gap: .35rem 1.5rem; color: var(--color-text); font: 400 clamp(1.1rem, 1.6vw, 1.35rem)/1.4 var(--font-heading); letter-spacing: -.01em; }
 @media (max-width: 700px) { .inner { grid-template-columns: 1fr; gap: 1.5rem; } }
+@media (prefers-reduced-motion: reduce) { .skills[data-visible] .inner::before, .skills[data-visible] .groups { animation: none; } }

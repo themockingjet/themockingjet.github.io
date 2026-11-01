@@ -344,9 +344,21 @@ main { padding-top: var(--topbar-height); }
 .contact { max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; display: flex; align-items: center; padding: clamp(2rem, 5vw, 4rem) var(--frame-pad); }
 .contact-inner { width: 100%; }
 .contact h2 { font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.05; letter-spacing: -.05em; max-width: 14ch; }
+[data-intro] .contact h2 { animation: contact-title .5s ease-out both; }
+@keyframes contact-title { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+[data-intro] .contact-action { animation: contact-action .22s ease-out both; }
+@keyframes contact-action { from { opacity: .7; } to { opacity: 1; } }
 .contact-action { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; margin: 3rem 0; }
 .contact-action p { color: var(--color-text-muted); }
-.contact-action a { display: inline-block; padding: .9rem 1.3rem; background: #e9c18b; color: #17130e; border-radius: 3px; font-weight: 700; }
+.contact-action a { display: inline-block; padding: .9rem 1.3rem; background: #e9c18b; color: #17130e; border-radius: 3px; font-weight: 700; position: relative; transition: filter .16s, transform .12s; }
+.contact-action a::before { content: ""; position: absolute; left: -24px; top: calc(50% - 4px); width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); }
+[data-intro] .contact-action a::before { animation: contact-signal .5s ease-out both; }
+@keyframes contact-signal { 0% { box-shadow: 0 0 0 0 var(--color-accent); transform: scale(2); } 100% { box-shadow: 0 0 0 20px transparent; transform: scale(1); } }
+.contact-action a::after { content: ""; position: absolute; bottom: 8px; left: 15%; width: 70%; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.contact-action a:hover::after, .contact-action a:focus-visible::after { transform: scaleX(1); }
+.contact-action a:hover, .contact-action a:focus-visible { filter: brightness(1.08); }
+.contact-action a:active { transform: scale(.99); }
+@media (prefers-reduced-motion: reduce) { [data-intro] .contact h2, [data-intro] .contact-action, [data-intro] .contact-action a::before { animation: none; } .contact-action a, .contact-action a::after { transition: none; } }
 @media (max-width: 700px) {
   .contact { min-height: 100%; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
   .contact-inner { align-self: stretch; min-height: 100%; margin: 0 auto; display: flex; flex-direction: column; }
