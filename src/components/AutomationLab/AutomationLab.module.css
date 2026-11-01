@@ -2,6 +2,7 @@
   max-width: var(--frame-max); min-height: calc(100dvh - 134px); margin: 0 auto; padding: clamp(2rem, 7vh, 4.5rem) var(--frame-pad) 2rem; }
 :global([data-mode="light"]) .lab { --lab-duplicate: #c42f2f; }
 .heading { font-family: var(--font-heading); font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -.035em; margin-bottom: clamp(1.5rem, 4vh, 2.5rem); max-width: 22ch; }
+:global([data-intro]) .heading { animation: findings-arrive .32s ease-out both; }
 .layout { display: grid; grid-template-columns: minmax(15rem, 21rem) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
 .hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
@@ -23,7 +24,7 @@
 .station::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--color-text-faint); }
 .hypotheses input:checked + .station { border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-accent-dim); }
 .hypotheses input:checked + .station::after { background: var(--color-accent); }
-.method { color: var(--color-text-muted); line-height: 1.55; max-width: 44ch; }
+.method { color: var(--color-text-muted); line-height: 1.55; max-width: 44ch; animation: method-change .18s ease-out; }
 .actions button { min-height: 46px; padding: .6rem 1.3rem; border: 1px solid var(--color-accent); border-radius: 999px; background: var(--color-accent-dim); color: var(--color-text); font: 600 .95rem/1 var(--font-heading); cursor: pointer; transition: background .2s; }
 .actions button:hover { background: color-mix(in srgb, var(--color-accent) 22%, transparent); }
 .note { color: var(--color-text-faint); font-size: .85rem; line-height: 1.45; }
@@ -34,6 +35,7 @@
 .laneHeader h3 { font: 500 1.05rem/1.3 var(--font-heading); letter-spacing: -.01em; }
 .laneHeader h3 span { margin-right: .7rem; color: var(--color-text-faint); font-size: .8rem; }
 .value { color: var(--color-text-muted); font-size: .9rem; }
+.value { animation: result-value .18s ease-out; }
 .value strong { color: var(--color-text); font: 600 1.25rem/1 var(--font-heading); font-variant-numeric: tabular-nums; }
 .timeline { display: block; width: 100%; height: clamp(64px, 12vh, 104px); overflow: visible; }
 .outage { fill: color-mix(in srgb, var(--color-text) 6%, transparent); }
@@ -62,10 +64,12 @@
 /* Result */
 .result { margin-top: .4rem; padding-top: 1rem; border-top: 1px solid var(--color-border); min-height: 7.5rem; }
 .verdict { color: var(--color-text-muted); font: 500 1rem/1.3 var(--font-heading); }
+.verdict[data-verdict] { animation: verdict-arrive 1.2s ease-out; }
 .verdict[data-verdict] { color: var(--color-text); font-size: clamp(1.5rem, 2.4vw, 2rem); letter-spacing: -.03em; }
 .verdict[data-verdict="supported"]::before, .verdict[data-verdict="rejected"]::before { content: ''; display: inline-block; width: .5em; height: .5em; margin-right: .5em; border-radius: 50%; vertical-align: .12em; background: var(--color-accent); }
 .verdict[data-verdict="rejected"]::before { background: transparent; box-shadow: inset 0 0 0 2px var(--color-text-muted); }
 .findings { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(12rem, 1fr); gap: 1rem 2.5rem; margin-top: .6rem; color: var(--color-text-muted); line-height: 1.5; }
+.findings { animation: findings-arrive .5s ease-out both; }
 .findings p { max-width: 54ch; }
 .cost { margin-top: .35rem; font-size: .92rem; }
 .trials { display: grid; gap: .35rem; margin: 0; }
@@ -75,6 +79,11 @@
 .track i { position: absolute; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; }
 .dotControl { box-shadow: inset 0 0 0 1px var(--color-text-muted); }
 .dotVariant { background: color-mix(in srgb, var(--color-accent) 80%, transparent); }
+@keyframes method-change { from { opacity: .55; } to { opacity: 1; } }
+@keyframes result-value { from { opacity: .55; } to { opacity: 1; } }
+@keyframes findings-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes verdict-arrive { 0%, 55% { background: var(--color-accent-dim); outline: 2px solid var(--color-accent); outline-offset: 8px; } 100% { background: transparent; outline: 2px solid transparent; outline-offset: 14px; } }
+@media (prefers-reduced-motion: reduce) { .method, .value, .findings, .verdict[data-verdict], :global([data-intro]) .heading { animation: none; } }
 
 @media (min-width: 901px) and (max-height: 860px) {
   .lab { padding-top: clamp(1.25rem, 4vh, 2.5rem); padding-bottom: 1rem; }

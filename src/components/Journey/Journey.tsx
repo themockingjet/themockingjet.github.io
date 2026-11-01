@@ -14,10 +14,17 @@ const prefersReducedMotion = () => typeof window.matchMedia !== 'function' || wi
 export default function Journey({ children }: { children: ReactNode[] }) {
   const track = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
+  const [arrived, setArrived] = useState(0)
+  const [introduced, setIntroduced] = useState<string[]>(['hero'])
   const currentRef = useRef(0)
   const lastWheel = useRef(0)
   const blur = useRef<SVGFEGaussianBlurElement>(null)
   const glide = useRef<gsap.core.Tween | null>(null)
+
+  const introduce = useCallback((index: number) => {
+    const id = destinations[index].id
+    setIntroduced((seen) => seen.includes(id) ? seen : [...seen, id])
+  }, [])
 
   const settle = useCallback((element: HTMLElement, left: number) => {
     glide.current?.kill()
@@ -28,7 +35,7 @@ export default function Journey({ children }: { children: ReactNode[] }) {
   }, [])
 
   // The track really scrolls to the next panel; the horizontal blur follows its speed, so content is sharp at rest.
-  const travel = useCallback((element: HTMLElement, left: number, duration: number) => {
+  const travel = useCallback((element: HTMLElement, left: number, duration: number, onArrive: () => void) => {
     glide.current?.kill()
     element.dataset.travelling = ''
     const state = { left: element.scrollLeft }
@@ -44,7 +51,7 @@ export default function Journey({ children }: { children: ReactNode[] }) {
         element.scrollLeft = state.left
         blur.current?.setAttribute('stdDeviation', `${Math.min(28, speed * 7).toFixed(1)} 0`)
       },
-      onComplete: () => settle(element, left),
+      onComplete: () => { settle(element, left); onArrive() },
     })
   }, [settle])
 
@@ -55,14 +62,15 @@ export default function Journey({ children }: { children: ReactNode[] }) {
     if (hops !== 0) window.dispatchEvent(new CustomEvent<JourneyTravel>('journey-travel', { detail: { hops, duration } }))
     currentRef.current = next
     setCurrent(next)
+    introduce(next)
     const element = track.current
     const panel = element?.children[next] as HTMLElement | undefined
     if (element && panel) {
-      if (animate && hops !== 0 && !prefersReducedMotion()) travel(element, panel.offsetLeft, duration)
-      else settle(element, panel.offsetLeft)
+      if (animate && hops !== 0 && !prefersReducedMotion()) travel(element, panel.offsetLeft, duration, () => setArrived(next))
+      else { settle(element, panel.offsetLeft); setArrived(next) }
     }
     if (hash && location.hash !== `#${destinations[next].id}`) history.pushState(null, '', `#${destinations[next].id}`)
-  }, [settle, travel])
+  }, [introduce, settle, travel])
 
   useEffect(() => () => { glide.current?.kill() }, [])
 
@@ -122,6 +130,14 @@ export default function Journey({ children }: { children: ReactNode[] }) {
     return () => element.removeEventListener('wheel', wheel)
   }, [show])
 
+  useEffect(() => {
+    const element = track.current
+    if (!element) return
+    const arrive = () => setArrived(currentRef.current)
+    element.addEventListener('scrollend', arrive)
+    return () => element.removeEventListener('scrollend', arrive)
+  }, [])
+
   return <>
     <main ref={track} className={styles.track} onScroll={(event) => {
       const element = event.currentTarget
@@ -130,10 +146,11 @@ export default function Journey({ children }: { children: ReactNode[] }) {
       if (index !== currentRef.current) {
         currentRef.current = index
         setCurrent(index)
+        introduce(index)
         history.replaceState(null, '', `#${destinations[index].id}`)
       }
     }}>
-      {destinations.map((destination, index) => <div key={destination.id} id={destination.id} data-destination={destination.id} className={styles.panel} tabIndex={0} aria-label={`${destination.label} destination`}>{children[index]}</div>)}
+      {destinations.map((destination, index) => <div key={destination.id} id={destination.id} data-destination={destination.id} data-current={arrived === index || undefined} data-intro={introduced.includes(destination.id) || undefined} className={styles.panel} tabIndex={0} aria-label={`${destination.label} destination`}>{children[index]}</div>)}
     </main>
     <nav className={styles.itinerary} aria-label="Journey destinations">
       <button className={styles.step} onClick={() => show(current - 1)} disabled={current === 0} aria-label="Previous destination"><Chevron /></button>

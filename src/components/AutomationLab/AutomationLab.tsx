@@ -113,7 +113,7 @@ export default function AutomationLab() {
         </fieldset>
         <div>
           <h3 className={styles.label}>Method</h3>
-          <p className={styles.method}>{hypothesis.method}</p>
+          <p key={hypothesis.id} className={styles.method}>{hypothesis.method}</p>
         </div>
         <div className={styles.actions}>
           {phase === 'running'
